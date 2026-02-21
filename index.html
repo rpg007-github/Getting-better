@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thrive — A Student Success & Confidence Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --bg-card: #ffffff;
+      --text: #2c2c2c;
+      --text-muted: #6b6b6b;
+      --accent: #2e7d5e;
+      --accent-light: #e8f5ee;
+      --accent-dark: #1b5e40;
+      --accent-warm: #c17a3a;
+      --border: #e2ddd6;
+      --border-light: #f0ece6;
+      --highlight: #fffbe6;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+      --warning: #b8860b;
+      --warning-bg: #fdf6e3;
+      --growth: #2e7d5e;
+      --growth-bg: #e8f5ee;
+      --reflect: #5b6abf;
+      --reflect-bg: #eef0f9;
+      --caution: #c0392b;
+      --caution-bg: #fde8e5;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1a3a2a 0%, #2e7d5e 40%, #4a9e7a 100%);
+      color: white; padding: 4rem 2rem 3.5rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero h1 {
+      font-family: 'Crimson Pro', serif; font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300; letter-spacing: 0.02em; margin-bottom: 0.5rem; position: relative;
+    }
+    .hero .subtitle { font-size: 1.1rem; font-weight: 300; opacity: 0.85; position: relative; max-width: 600px; margin: 0 auto; }
+    .hero .badge {
+      display: inline-block; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+      padding: 0.3rem 1rem; border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; position: relative;
+    }
+
+    /* Container */
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* TOC */
+    .toc {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow);
+    }
+    .toc h2 {
+      font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 500;
+      color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.35rem; }
+    .toc a {
+      color: var(--text); text-decoration: none; font-size: 0.92rem; padding: 0.3rem 0.5rem;
+      border-radius: 4px; display: flex; align-items: baseline; gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .toc a:hover { background: var(--accent-light); color: var(--accent); }
+    .toc a .num {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent);
+      min-width: 1.8rem; opacity: 0.7;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 2rem 2.25rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);
+      transition: box-shadow 0.3s ease;
+    }
+    .section-card:hover { box-shadow: var(--shadow-hover); }
+    .section-card h2 {
+      font-family: 'Crimson Pro', serif; font-size: 1.5rem; font-weight: 500;
+      color: var(--accent-dark); margin-bottom: 0.25rem; display: flex;
+      align-items: baseline; gap: 0.75rem;
+    }
+    .section-card h2 .snum {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); opacity: 0.6;
+    }
+    .section-card h3 {
+      font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 500;
+      color: var(--text); margin: 1.25rem 0 0.5rem; padding-top: 0.75rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .section-card p { margin-bottom: 0.85rem; }
+
+    /* Callout Boxes */
+    .callout {
+      border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0;
+      border-left: 3px solid; font-size: 0.93rem;
+    }
+    .callout .callout-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    .callout-growth { background: var(--growth-bg); border-color: var(--growth); }
+    .callout-growth .callout-label { color: var(--growth); }
+    .callout-warning { background: var(--warning-bg); border-color: var(--warning); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-reflect { background: var(--reflect-bg); border-color: var(--reflect); }
+    .callout-reflect .callout-label { color: var(--reflect); }
+    .callout-caution { background: var(--caution-bg); border-color: var(--caution); }
+    .callout-caution .callout-label { color: var(--caution); }
+
+    /* Strategy Tables */
+    .strat-table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem;
+    }
+    .strat-table th {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+      text-align: left; padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--accent);
+      background: var(--accent-light);
+    }
+    .strat-table td {
+      padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+    .strat-table tr:hover td { background: #fafaf7; }
+
+    /* Interactive Sections */
+    .interactive-header {
+      font-family: 'Crimson Pro', serif; font-size: 1.8rem; font-weight: 400;
+      text-align: center; color: var(--accent-dark); margin: 3rem 0 0.5rem;
+    }
+    .interactive-sub {
+      text-align: center; color: var(--text-muted); font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Tab System */
+    .tab-bar {
+      display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tab-btn {
+      font-family: 'Source Sans 3', sans-serif; font-size: 0.85rem; font-weight: 500;
+      padding: 0.5rem 1.25rem; border: 1px solid var(--border); border-radius: 20px;
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Quiz Styles */
+    .quiz-q {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    }
+    .quiz-q .qnum {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.2rem;
+    }
+    .quiz-q .qtext {
+      font-family: 'Crimson Pro', serif; font-size: 1rem; font-weight: 500;
+      margin-bottom: 0.65rem; line-height: 1.5;
+    }
+    .quiz-q label {
+      display: block; padding: 0.4rem 0.6rem; margin: 0.15rem 0; border-radius: 4px;
+      cursor: pointer; font-size: 0.9rem; transition: background 0.15s;
+    }
+    .quiz-q label:hover { background: var(--accent-light); }
+    .quiz-q input[type="radio"] { margin-right: 0.5rem; accent-color: var(--accent); }
+    .quiz-fb {
+      margin-top: 0.5rem; padding: 0.6rem 0.75rem; border-radius: 4px;
+      font-size: 0.85rem; display: none;
+    }
+    .quiz-fb.correct { background: #e8f5ee; border-left: 3px solid #2e7d5e; }
+    .quiz-fb.incorrect { background: #fde8e5; border-left: 3px solid #c0392b; }
+    .quiz-score {
+      text-align: center; font-family: 'Crimson Pro', serif; font-size: 1.3rem;
+      color: var(--accent); margin: 1rem 0; padding: 1rem;
+      background: var(--accent-light); border-radius: 8px;
+    }
+    .quiz-check-btn {
+      display: block; margin: 1.5rem auto; font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem; font-weight: 600; padding: 0.65rem 2.5rem;
+      background: var(--accent); color: white; border: none; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .quiz-check-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    /* Flashcard Styles */
+    .fc-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; justify-content: center; }
+    .fc-filter-btn {
+      font-family: 'Source Sans 3', sans-serif; font-size: 0.78rem; font-weight: 500;
+      padding: 0.35rem 0.85rem; border: 1px solid var(--border); border-radius: 14px;
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    }
+    .fc-filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .fc-filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .fc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.85rem; }
+    .fc { perspective: 700px; height: 200px; cursor: pointer; }
+    .fci {
+      position: relative; width: 100%; height: 100%; transition: transform 0.45s ease;
+      transform-style: preserve-3d;
+    }
+    .fc.fl .fci { transform: rotateY(180deg); }
+    .fcfr, .fcbk {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+      border-radius: 6px; border: 1px solid var(--border); display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      padding: 1.15rem; text-align: center;
+    }
+    .fcfr { background: var(--bg-card); }
+    .fcfr .t {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
+      margin-bottom: 0.5rem; opacity: 0.7;
+    }
+    .fcfr .q {
+      font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 500;
+      line-height: 1.5; color: var(--text);
+    }
+    .fcfr .h { font-size: 0.7rem; color: var(--text-muted); margin-top: auto; padding-top: 0.3rem; }
+    .fcbk {
+      background: linear-gradient(145deg, #1a3a2a, #2e7d5e); color: white;
+      transform: rotateY(180deg); border-color: var(--accent);
+    }
+    .fcbk .t {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;
+    }
+    .fcbk .a { font-size: 0.88rem; line-height: 1.6; }
+
+    /* Self-Assessment Styles */
+    .sa-q {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.25rem 1.5rem; margin-bottom: 1.1rem;
+    }
+    .sa-q .qn {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.2rem;
+    }
+    .sa-q .qt {
+      font-family: 'Crimson Pro', serif; font-size: 1rem; font-weight: 500;
+      margin-bottom: 0.7rem; color: var(--text); line-height: 1.6;
+    }
+    .sa-ta {
+      width: 100%; min-height: 90px; padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border); border-radius: 4px;
+      font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; line-height: 1.6;
+      resize: vertical; background: #fafaf7; color: var(--text); transition: border-color 0.2s;
+    }
+    .sa-ta:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(46,125,94,0.1); }
+    .sa-btn {
+      margin-top: 0.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 0.82rem;
+      font-weight: 600; padding: 0.4rem 1.2rem; background: var(--accent); color: white;
+      border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+    }
+    .sa-btn:hover { background: var(--accent-dark); }
+    .sa-result { margin-top: 0.6rem; display: none; }
+    .sa-bar-wrap {
+      height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin: 0.3rem 0;
+    }
+    .sa-bar { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .sa-pct { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500; }
+    .sa-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.4rem 0; }
+    .sa-tag {
+      font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .sa-tag.hit { background: #e8f5ee; color: #2e7d5e; }
+    .sa-tag.miss { background: #f0f0f0; color: #999; }
+    .sa-model {
+      margin-top: 0.5rem; font-size: 0.85rem; background: #fafaf7;
+      border: 1px solid var(--border-light); border-radius: 4px; padding: 0.75rem; display: none;
+    }
+    .sa-model-toggle {
+      font-size: 0.78rem; color: var(--accent); cursor: pointer; text-decoration: underline;
+      margin-top: 0.3rem; display: inline-block;
+    }
+
+    /* Inline highlight */
+    .hl { background: linear-gradient(to top, rgba(46,125,94,0.12) 40%, transparent 40%); padding: 0 2px; }
+
+    /* Scenario Cards */
+    .scenario-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.25rem 1.5rem; margin: 1rem 0;
+    }
+    .scenario-card .scenario-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-warm);
+      margin-bottom: 0.4rem;
+    }
+    .scenario-card .scenario-situation {
+      font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-style: italic;
+      color: var(--text); margin-bottom: 0.5rem; line-height: 1.5;
+    }
+
+    /* Progress Tracker */
+    .progress-section {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem 2rem; margin: 2rem 0; box-shadow: var(--shadow);
+    }
+    .progress-section h3 {
+      font-family: 'Crimson Pro', serif; font-size: 1.2rem; color: var(--accent-dark);
+      margin-bottom: 0.75rem;
+    }
+    .progress-item {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-light); cursor: pointer;
+    }
+    .progress-item:last-child { border-bottom: none; }
+    .progress-check {
+      width: 22px; height: 22px; border: 2px solid var(--border);
+      border-radius: 4px; flex-shrink: 0; display: flex; align-items: center;
+      justify-content: center; transition: all 0.2s; font-size: 0.8rem;
+    }
+    .progress-item.done .progress-check {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
+    .progress-item.done .progress-text { text-decoration: line-through; color: var(--text-muted); }
+    .progress-text { font-size: 0.9rem; }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 2rem; color: var(--text-muted);
+      font-size: 0.8rem; border-top: 1px solid var(--border-light); margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .section-card { padding: 1.25rem 1rem; }
+      .toc { padding: 1rem; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .fc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">Your Guide to Thriving</div>
+  <h1>Thrive</h1>
+  <p class="subtitle">A practical, no-judgment guide to building confidence, study skills, social courage, and real-world readiness for the transition from high school to college and beyond.</p>
+</div>
+
+<div class="container">
+
+<!-- Welcome Message -->
+<div class="section-card" style="border-left: 3px solid var(--accent);">
+  <p style="font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; color: var(--accent-dark); line-height: 1.7;">
+    If you are reading this, you are already doing something brave. You showed up. You are looking for help. That takes more courage than most people realize, and it puts you ahead of everyone who is pretending they have it all figured out. This guide was written for you, not at you. No lectures. No guilt trips. Just real strategies for the real challenges you face. Some of you are dealing with anxiety that makes it hard to raise your hand in class. Some of you went through years of disrupted schooling and feel like you missed something everyone else got. Some of you are tired of the constant noise of social media telling you that you are not enough. And some of you might not realize that the way you interact with others is part of the problem. This guide covers all of it. Take what helps. Come back when you need it. You belong here.
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>What's Inside</h2>
+  <div class="toc-grid">
+    <a href="#s1"><span class="num">01</span> You Are Not Behind</a>
+    <a href="#s2"><span class="num">02</span> How to Actually Study</a>
+    <a href="#s3"><span class="num">03</span> Managing Anxiety & Asking for Help</a>
+    <a href="#s4"><span class="num">04</span> Reading, Writing, & the Skills Nobody Taught You</a>
+    <a href="#s5"><span class="num">05</span> Navigating Social Media & Digital Noise</a>
+    <a href="#s6"><span class="num">06</span> Talking to People in Real Life</a>
+    <a href="#s7"><span class="num">07</span> Being the Person Others Feel Safe Around</a>
+    <a href="#s8"><span class="num">08</span> Time Management & Adulting Basics</a>
+    <a href="#s9"><span class="num">09</span> Building Your Confidence Playbook</a>
+    <a href="#s10"><span class="num">10</span> When You Are the Problem (And That's Okay)</a>
+    <a href="#interactive"><span class="num">++</span> Self-Assessments & Practice</a>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section-card" id="s1">
+  <h2><span class="snum">Section 01</span> You Are Not Behind</h2>
+  <p>There is a lie floating around in your head, and it sounds something like this: "Everyone else knows what they are doing except me." That is categorically, demonstrably false. The students sitting next to you in orientation are terrified too. The ones who look confident are often the most anxious underneath. College is a transition, not a test you were supposed to have already passed.</p>
+
+  <p>If you went through high school during COVID, you lost something real. Not just instruction time, but the social scaffolding that teaches you how to navigate shared spaces, read body language, resolve small conflicts, and build the kind of casual friendships that make hard things bearable. You did not fail. The system around you failed, and now you are left to rebuild skills that should have developed naturally over years of face-to-face interaction. That is not a character flaw. That is a circumstance, and circumstances can be worked with.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Growth Mindset</div>
+    <p>When your brain tells you "I'm not good at this," it is lying by omission. The complete sentence is "I'm not good at this yet." That one word changes everything. Your brain rewires itself through practice. That does not stop at 18 or 25 or 50. Every skill in this guide is learnable at any age. You are not stuck.</p>
+  </div>
+
+  <p>Maybe your school taught "new math" in a way that felt confusing. Maybe you never learned cursive and now you cannot read your professor's whiteboard notes. Maybe nobody showed you how to read an analog clock and you feel embarrassed about that. These are not intelligence problems. These are exposure problems. You were not taught, so you did not learn, and that is a completely different thing than being unable to learn. The distinction matters enormously. An exposure gap can be closed. A fixed deficit cannot. You have an exposure gap, not a deficit.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Reality Check</div>
+    <p>Comparison is a trap. Social media shows you highlight reels of other people's lives and tells you it is normal. It is not. Nobody posts their confusion, their loneliness, their third attempt at understanding a concept. The version of "everyone else" that lives in your head is fictional.</p>
+  </div>
+
+  <h3>What the Research Actually Says</h3>
+  <p>Studies on post-COVID college students consistently show elevated rates of anxiety, reduced confidence in academic preparedness, and a measurable gap in collaborative and communication skills compared to pre-pandemic cohorts. You are not imagining it. You also are not alone. Entire graduating classes share your experience. The difference between students who struggle and students who thrive is not talent or intelligence. It is whether they develop strategies and whether they are willing to feel uncomfortable while those strategies take root. That willingness is a choice you can make today.</p>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section-card" id="s2">
+  <h2><span class="snum">Section 02</span> How to Actually Study</h2>
+  <p>Here is the uncomfortable truth: most students do not know how to study. They were never explicitly taught, and the methods they default to, rereading notes, highlighting textbooks, cramming the night before, are among the least effective strategies that cognitive science has identified. This is not about working harder. This is about working in a way that aligns with how your brain actually processes and retains information.</p>
+
+  <h3>The Science of Forgetting (And Why It Helps You)</h3>
+  <p>Your brain is designed to forget. This sounds like bad news, but it is actually the key to effective studying. When you force your brain to retrieve information that is starting to fade, the act of retrieval strengthens the memory far more than passively reviewing it. This is called the testing effect, and it is one of the most replicated findings in all of learning science. Every time you struggle to remember something and succeed, you are physically strengthening the neural pathway to that information.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Key Strategy</div>
+    <p>Stop rereading your notes. Instead, close your notes and try to write down everything you remember. The gaps you find are exactly what you need to study. This single change, switching from passive review to active recall, can improve retention by 50% or more.</p>
+  </div>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Method</th><th>What It Looks Like</th><th>Why It Works</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Active Recall</strong></td><td>Close your book. Write what you remember. Check gaps.</td><td>Forces retrieval, which strengthens memory traces</td></tr>
+      <tr><td><strong>Spaced Repetition</strong></td><td>Review material at increasing intervals (1 day, 3 days, 7 days, 14 days)</td><td>Catches information right as it starts to fade</td></tr>
+      <tr><td><strong>Interleaving</strong></td><td>Mix different topics in a single study session rather than blocking one topic</td><td>Improves your ability to discriminate between concepts and apply the right strategy</td></tr>
+      <tr><td><strong>Elaborative Interrogation</strong></td><td>Ask "why?" and "how?" after every fact</td><td>Creates deeper encoding by connecting new info to existing knowledge</td></tr>
+      <tr><td><strong>Teach-Back Method</strong></td><td>Explain the concept out loud as if teaching a friend who knows nothing about it</td><td>Exposes gaps in understanding you did not know you had</td></tr>
+      <tr><td><strong>Cornell Notes</strong></td><td>Divide page: notes on right, cue questions on left, summary at bottom</td><td>Built-in review system and self-testing</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Building a Study Session That Actually Works</h3>
+  <p>A productive study session is not about duration. Two focused hours will always outperform six distracted ones. Start by removing your phone from the room, not just turning it face down. Your brain knows it is there and will spend cognitive resources resisting the urge to check it. Set a timer for 25 minutes of focused work followed by a 5-minute break. This is the Pomodoro Technique, and it works because it makes the task feel finite rather than overwhelming. During those 25 minutes, do active recall, practice problems, or teach-back. During the break, stand up, get water, and look at something far away to rest your eyes.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Common Trap</div>
+    <p>Feeling productive is not the same as being productive. Highlighting, recopying notes in pretty colors, and organizing your desk all feel like studying but produce minimal learning. If you are not struggling to remember something or working through a problem, you are probably not learning. Productive discomfort is the signal that your brain is building new connections.</p>
+  </div>
+
+  <h3>Before, During, and After Class</h3>
+  <p>Before class, spend ten minutes skimming the assigned reading or last class's notes. This primes your brain to recognize relevant information during the lecture. During class, write notes in your own words rather than transcribing everything. If you write something verbatim, your brain treats it as a copying task, not a comprehension task. After class, within 24 hours, spend fifteen minutes doing a brain dump of everything you remember. This single habit, the post-class brain dump, is more valuable than hours of review later.</p>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section-card" id="s3">
+  <h2><span class="snum">Section 03</span> Managing Anxiety & Asking for Help</h2>
+  <p>Anxiety is not weakness. Anxiety is your brain's threat detection system firing in situations where there is no actual threat. When you feel your heart racing before raising your hand in class, that is the same neurological response your ancestors had when facing a predator. Your brain has not caught up to the fact that asking a question in Biology 101 is not life-threatening. Understanding this does not make the feeling go away, but it does let you respond to it differently. You can acknowledge the alarm without obeying it.</p>
+
+  <h3>The Anxiety Cycle and How to Break It</h3>
+  <p>Anxiety follows a predictable pattern: you anticipate something uncomfortable, your body produces stress hormones, you avoid the situation to relieve the discomfort, and the relief teaches your brain that avoidance was the right call. Next time, the anxiety is stronger because avoidance "worked." The only way to break this cycle is to do the uncomfortable thing and survive it. Not enjoy it. Not do it perfectly. Just survive it. Each time you do, your brain recalibrates the threat level downward.</p>
+
+  <div class="callout callout-reflect">
+    <div class="callout-label">Try This</div>
+    <p>The 5-4-3-2-1 grounding technique can interrupt anxiety in the moment: name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste. This forces your prefrontal cortex back online by giving it a concrete task, pulling you out of the emotional hijack.</p>
+  </div>
+
+  <h3>Asking for Help Is a Skill, Not a Personality Trait</h3>
+  <p>Many students believe that asking for help means they are not smart enough. In reality, the most successful students, researchers, and professionals are relentless help-seekers. They go to office hours. They form study groups. They email professors. They use tutoring centers. They do this not because they are struggling more than everyone else, but because they understand that learning is a collaborative process and that every expert they have ever admired got there by asking thousands of questions.</p>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Situation</th><th>What to Say</th><th>Why This Works</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>You are lost in lecture</td><td>"I followed the first part but got confused around [specific point]. Can you walk me through that transition?"</td><td>Shows you were engaged and identifies the exact gap</td></tr>
+      <tr><td>You need to visit office hours</td><td>"I have been working through [topic] and I am stuck on [specific thing]. Here is what I have tried so far."</td><td>Shows effort and gives the professor a starting point</td></tr>
+      <tr><td>You are overwhelmed</td><td>"I am feeling overwhelmed by the workload and I want to figure out a plan. Can we talk about priorities?"</td><td>Frames it as problem-solving, not complaining</td></tr>
+      <tr><td>You missed class</td><td>"I missed class on [date]. I have already gotten the notes from a classmate, but could I clarify [specific point] with you?"</td><td>Shows responsibility before asking for help</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Professor Secret</div>
+    <p>Professors love office hours, and almost nobody comes. When you show up, you are not bothering them; you are literally doing the thing they wish more students would do. Most professors went into teaching because they enjoy explaining things. Let them.</p>
+  </div>
+
+  <h3>When Anxiety Needs More Than Strategies</h3>
+  <p>The techniques in this guide will handle most of what you are dealing with. But if you are genuinely stuck, do not white-knuckle it alone. Start collecting people in your corner: a professor who takes an interest in you, an advisor, an older student who has been through it, a campus counselor, a coach, a family friend, anyone who is further along the path and willing to help you navigate it. These mentors do not have to be formal. They just have to be people who will tell you the truth and cheer you on. Campus counseling centers exist for exactly this purpose, and using them is a sign of good judgment, not weakness. The strongest people you will ever meet are the ones who learned to ask for help early.</p>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section-card" id="s4">
+  <h2><span class="snum">Section 04</span> Reading, Writing, & the Skills Nobody Taught You</h2>
+  <p>If you feel like there are basic skills everyone else seems to have that you somehow missed, you are right. But here is the part nobody tells you: it happened to millions of students, not just you. Curriculum changes, pandemic disruptions, and shifting educational priorities created genuine gaps. The good news is that these are mechanical skills, meaning they respond extremely well to deliberate practice. You can close these gaps faster than you think.</p>
+
+  <h3>Reading Comprehension</h3>
+  <p>College reading is different from high school reading. You will be expected to read dense material, identify the author's argument, evaluate evidence, and synthesize information across multiple sources. If you struggle with this, start with the SQ3R method: Survey the chapter headings first, generate Questions from those headings, Read actively to answer your questions, Recite the answers in your own words, and Review by testing yourself later. This turns passive reading into an active conversation with the text.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Practical Tip</div>
+    <p>Read with a pen. Underline the one sentence per paragraph that captures the main point. Write a one-sentence summary in the margin. At the end of a chapter, you should be able to reconstruct the argument from your margin notes alone. If you cannot, reread the sections where your notes are weakest.</p>
+  </div>
+
+  <h3>Writing at the College Level</h3>
+  <p>College writing is about constructing an argument, not about demonstrating that you did the reading. Every paragraph should make one point, support it with evidence, and explain why that evidence matters. A strong paper has a thesis (your argument in one sentence), body paragraphs that each advance one piece of that argument, and a conclusion that explains the implications. If you are unsure whether your writing is clear, read it out loud. Awkward phrasing and unclear logic become obvious when spoken.</p>
+
+  <h3>Skills You Can Learn in a Weekend</h3>
+  <p>Reading an analog clock, writing legibly by hand, performing mental math without a calculator, addressing a formal email, reading a physical map: these are all skills that can be learned in a few hours of deliberate practice. There are free resources online for every one of them. The embarrassment you feel about not knowing these things is worse than the effort it takes to learn them. Give yourself a weekend, close the gaps, and move on. Nobody needs to know, and you will feel remarkably better.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-label">Important</div>
+    <p>If reading or writing feels harder for you than it seems to be for others, the answer is almost always more practice, not a label. Read more. Write more. Start with material you actually enjoy and work your way toward harder stuff. Find someone who is good at it and ask them to look at your work. A professor, a tutor, an upperclassman, anyone who will give you honest feedback is worth their weight in gold. Collecting mentors, people who are further down the road than you and willing to look back and help, is one of the most underrated strategies in all of education.</p>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section-card" id="s5">
+  <h2><span class="snum">Section 05</span> Navigating Social Media & Digital Noise</h2>
+  <p>Your phone is not neutral. It is a device engineered by teams of behavioral psychologists and designers whose explicit goal is to maximize the time you spend looking at it. Every notification, every infinite scroll, every autoplay video is a deliberate design choice meant to exploit the dopamine system in your brain. This is not a conspiracy theory. It is a well-documented business model. Understanding this is the first step toward taking back control of your attention, your self-image, and your mental health.</p>
+
+  <h3>The Comparison Machine</h3>
+  <p>Social media shows you a curated, filtered, edited version of other people's lives and then your brain compares it to the unfiltered, messy, behind-the-scenes version of your own life. This comparison is inherently unfair, and your brain does not naturally adjust for it. Research consistently shows that increased social media use correlates with decreased self-esteem, increased anxiety, increased feelings of loneliness, and distorted body image. You are not weak for being affected by this. You are human, and the technology is specifically designed to exploit human psychology.</p>
+
+  <div class="callout callout-caution">
+    <div class="callout-label">Critical Thinking Required</div>
+    <p>TikTok, Reddit, and similar platforms are filled with people presenting opinions as facts, sharing medical misinformation, giving financial advice they are not qualified to give, and telling you how to live your life based on their own unexamined biases. Before you believe anything you read online, ask: What is this person's actual expertise? What are they selling? Who benefits if I believe this? Would a credible expert in this field agree?</p>
+  </div>
+
+  <h3>Practical Digital Boundaries</h3>
+  <p>You do not have to delete social media (though some people find it transformative). But you should set boundaries that protect your cognitive resources and emotional wellbeing. Use built-in screen time tools to set daily limits. Turn off all non-essential notifications. Unfollow any account that consistently makes you feel worse about yourself. Curate your feed intentionally: follow accounts that teach you things, make you genuinely laugh, or inspire real action rather than passive consumption. Most importantly, do not check your phone in the first hour after waking or the last hour before sleep. These windows profoundly affect your mood and sleep quality.</p>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Digital Habit</th><th>The Problem</th><th>The Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Checking phone first thing in the morning</td><td>Starts your day in reactive mode, spiking cortisol</td><td>Charge your phone outside your bedroom; use a real alarm clock</td></tr>
+      <tr><td>Scrolling during study breaks</td><td>A "5-minute" break becomes 45 minutes; re-engaging with study material becomes harder</td><td>Walk, stretch, get water, or do breathing exercises instead</td></tr>
+      <tr><td>Comparing yourself to influencers</td><td>Distorted reference points for appearance, success, and lifestyle</td><td>Remind yourself you are comparing your behind-the-scenes to their highlight reel</td></tr>
+      <tr><td>Seeking validation through likes</td><td>Outsources your self-worth to an algorithm</td><td>Practice posting less and creating more for yourself</td></tr>
+      <tr><td>Doomscrolling before bed</td><td>Activates stress response, disrupts melatonin, wrecks sleep quality</td><td>Read a physical book, listen to a podcast, or journal instead</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section-card" id="s6">
+  <h2><span class="snum">Section 06</span> Talking to People in Real Life</h2>
+  <p>If making small talk feels unnatural, if you dread group projects, if you avoid the dining hall because you do not want to sit alone, you are experiencing something that millions of young adults share. Social skills are skills, meaning they develop through practice, not through wishing you were different. The awkwardness you feel is not a permanent feature of who you are. It is a muscle that has not been exercised enough, often because the pandemic removed the gym.</p>
+
+  <h3>Starting Conversations When You Have No Idea What to Say</h3>
+  <p>The secret to starting conversations is that it does not require being clever or charismatic. It requires being willing to be ordinary. Comment on something shared: the class, the weather, the terrible WiFi, the assignment that is due tomorrow. Ask a simple question and actually listen to the answer. People overwhelmingly respond well to genuine interest. "How are you finding this class?" works perfectly. You do not need a perfect opening line.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">The 3-Second Rule</div>
+    <p>When you see someone you want to talk to, you have about 3 seconds before your brain starts generating reasons not to. Just say something within those 3 seconds. The words do not matter nearly as much as the act of initiating. "Hey, is this seat taken?" has started a million friendships.</p>
+  </div>
+
+  <h3>Listening Is the Superpower Nobody Talks About</h3>
+  <p>Most people are not listening during conversations. They are waiting for their turn to talk or mentally rehearsing what they are going to say next. If you genuinely listen, ask follow-up questions based on what the other person actually said, and remember details for next time, you will be perceived as one of the most interesting people they know. Ironically, the best conversationalists are the best listeners, not the best talkers.</p>
+
+  <div class="scenario-card">
+    <div class="scenario-label">Real-World Scenario</div>
+    <div class="scenario-situation">"You are sitting in a lecture hall and the person next to you mentions they are confused about the homework."</div>
+    <p>This is an opening, not a burden. You can say, "Same here, which part tripped you up?" Even if you do understand the homework, asking about their confusion builds connection. If neither of you figures it out, you now have a study partner and a reason to visit office hours together, which is less intimidating than going alone.</p>
+  </div>
+
+  <h3>Group Projects Without the Dread</h3>
+  <p>Group projects are universally disliked because they require negotiation, compromise, accountability, and communication, which are exactly the skills that make them valuable. At the first meeting, volunteer to be the person who creates the shared document or sets up the group chat. This is a small act that positions you as organized and helpful without requiring you to be the loudest voice. Set clear deadlines for each person's contribution and follow up gently. If someone is not pulling their weight, address it directly but kindly: "Hey, just checking in on the section you were going to draft. Do you need help with anything?"</p>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section-card" id="s7">
+  <h2><span class="snum">Section 07</span> Being the Person Others Feel Safe Around</h2>
+  <p>This section is about something that is easy to overlook: the impact you have on the people around you. Every interaction you have either adds to or subtracts from someone else's sense of safety, belonging, and confidence. You do not have to be a therapist or a saint. You just have to be aware that your words, your tone, your body language, and even your silence carry weight, especially for people who are already anxious or struggling.</p>
+
+  <h3>What "Safe" Looks Like in Practice</h3>
+  <p>Being a safe person means that when someone shares something vulnerable, you do not laugh, you do not dismiss it, and you do not immediately redirect the conversation to yourself. It means that when someone asks a question in class that seems obvious, you do not roll your eyes or make a comment to the person next to you. It means you make space for people who are quieter rather than dominating every conversation. None of this requires you to suppress your personality. It requires you to be aware that the room is not just about you.</p>
+
+  <div class="callout callout-reflect">
+    <div class="callout-label">Reflect</div>
+    <p>Think about the people in your life who make you feel comfortable being yourself. What do they do? They probably listen without interrupting, ask genuine questions, do not mock or dismiss things you care about, and remember what you told them. That is the blueprint. It is not complicated. It is just intentional.</p>
+  </div>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Behavior</th><th>Impact on Others</th><th>Better Alternative</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Laughing at someone's question in class</td><td>They will never ask another question in that room</td><td>Say nothing, or better yet, say "That is actually a good question"</td></tr>
+      <tr><td>Talking over someone in a group</td><td>Signals their contribution does not matter</td><td>Pause, let them finish, then respond to what they said</td></tr>
+      <tr><td>Making jokes at someone's expense</td><td>Publicly erodes their confidence for a momentary laugh</td><td>Make jokes that do not require a target</td></tr>
+      <tr><td>Ignoring someone who is clearly struggling</td><td>Reinforces their belief that nobody cares</td><td>"Hey, you seem off today. Anything I can do?"</td></tr>
+      <tr><td>Gossiping or sharing someone's private information</td><td>Destroys trust and can cause lasting harm</td><td>If it is not your story to tell, do not tell it</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The Ripple Effect</h3>
+  <p>Research on social contagion shows that emotions and behaviors spread through networks. When you are kind to one person, they are statistically more likely to be kind to someone else. When you mock someone, that negativity propagates too. You are not just affecting one interaction. You are setting the tone for an entire web of interactions that you will never see. Being the person who makes others feel safe is not just altruistic. It builds the kind of community that makes your own life better.</p>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section-card" id="s8">
+  <h2><span class="snum">Section 08</span> Time Management & Adulting Basics</h2>
+  <p>The transition from high school to college involves a sudden and dramatic increase in personal responsibility. Nobody is going to wake you up, remind you about assignments, make sure you eat, or tell you to go to bed at a reasonable hour. This freedom is exhilarating and terrifying in equal measure. The students who thrive are not the ones with the most willpower. They are the ones who build systems that do not require willpower.</p>
+
+  <h3>The Weekly Planning Session</h3>
+  <p>Every Sunday evening, spend 20 minutes looking at the week ahead. Write down every deadline, appointment, class, and commitment. Then block time for studying, meals, exercise, and rest. The key insight is that if something is not on your calendar, it probably will not happen. Treat your study blocks like class: non-negotiable appointments with yourself. Use a physical planner if screens are distracting, or a digital calendar if that works better for your brain. The tool does not matter. The habit does.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">The Two-Minute Rule</div>
+    <p>If something will take less than two minutes, do it now. Respond to that email. Put your laundry away. Fill your water bottle. These tiny tasks accumulate into overwhelming piles when deferred. Handling them immediately keeps your mental load manageable and builds momentum for bigger tasks.</p>
+  </div>
+
+  <h3>Sleep Is Not Optional</h3>
+  <p>Sleep is when your brain consolidates the information you studied that day. Pulling an all-nighter before an exam does not just make you tired; it actively prevents the memory consolidation that would have made your studying effective. Aim for 7 to 9 hours. Go to bed and wake up at roughly the same time every day, including weekends. Your circadian rhythm is a biological system, and it performs best with consistency. This single habit, consistent sleep, will improve your grades, your mood, your relationships, and your physical health more than almost any other change you can make.</p>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Adulting Skill</th><th>Why It Matters</th><th>How to Start</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Cooking basic meals</td><td>Saves money, improves nutrition, builds independence</td><td>Learn 5 simple recipes: eggs, pasta, stir-fry, soup, and a grain bowl</td></tr>
+      <tr><td>Managing money</td><td>Debt and financial stress are the top stressors for college students</td><td>Track every dollar for one month; set up a simple budget with 50/30/20 rule</td></tr>
+      <tr><td>Doing laundry</td><td>Basic self-care that signals self-respect</td><td>Darks and lights separated, cold water for most things, read labels</td></tr>
+      <tr><td>Professional email etiquette</td><td>Every email to a professor or employer is a first impression</td><td>Subject line, greeting, clear request, thank you, signature with full name</td></tr>
+      <tr><td>Making appointments</td><td>Doctor, dentist, advisor: nobody schedules these for you anymore</td><td>Call during business hours; have your insurance card and ID ready</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section-card" id="s9">
+  <h2><span class="snum">Section 09</span> Building Your Confidence Playbook</h2>
+  <p>Confidence is not a feeling you wait for. It is a result of repeated action. You do not become confident and then take action. You take action and then become confident. This is not motivational poster nonsense. This is how the brain works. Each time you do something that scares you and survive it, your brain stores that experience as evidence that you are capable. Over time, the evidence accumulates, and what used to feel impossible starts to feel manageable.</p>
+
+  <h3>The Confidence Equation</h3>
+  <p>Confidence equals evidence of competence. If you want to feel confident about public speaking, you need to speak publicly and survive it, even badly. If you want to feel confident about studying, you need to study effectively and see results. If you want to feel confident socially, you need to have conversations and discover that most of them go fine. There is no shortcut around the doing. But the doing does not have to be dramatic. Start absurdly small. Raise your hand once per week. Say hello to one new person. Study for 25 minutes using active recall. These small actions generate real evidence that compounds over time.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Your Wins Journal</div>
+    <p>Every evening, write down three things you did that day that required effort or courage, no matter how small. "I asked a question in class." "I studied for 30 minutes without my phone." "I said hi to someone in the hall." Your brain has a negativity bias: it remembers failures more vividly than successes. A wins journal counteracts this by building a visible, growing record of your capability.</p>
+  </div>
+
+  <h3>Handling Failure and Rejection</h3>
+  <p>You will fail. You will bomb a test, say something awkward, get rejected from a club or a job. This is not a sign that you are not cut out for college. This is a universal human experience that successful people have simply learned to metabolize faster. The difference between people who are crushed by failure and people who grow from it is not resilience as an innate trait. It is a practiced response: acknowledge the disappointment, extract the lesson, adjust the approach, and try again. That is the entire formula. It does not feel good, but it works.</p>
+
+  <div class="callout callout-reflect">
+    <div class="callout-label">Reframe</div>
+    <p>When something goes wrong, replace "I failed" with "I collected data." A bad exam score tells you exactly what you did not understand. A conversation that went poorly teaches you what to try differently. Failure is feedback, not identity. You are not a failure. You are a person who attempted something and now has more information than before.</p>
+  </div>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section-card" id="s10">
+  <h2><span class="snum">Section 10</span> When You Are the Problem (And That's Okay)</h2>
+  <p>This section requires honesty, and it might be the most important one in this guide. Some of you are not just struggling with anxiety or confidence. Some of you are contributing to other people's anxiety and undermining other people's confidence, and you may not even realize it. This is not an accusation. It is an invitation to look inward with the same openness you would want others to extend to you.</p>
+
+  <h3>Unintentional Harm Is Still Harm</h3>
+  <p>You do not have to be a bully to cause damage. Sarcasm that you think is funny might be humiliating to the person on the receiving end. Dominating a group conversation might be silencing someone who was about to contribute for the first time. Sharing a meme about someone's appearance might seem harmless to you but could devastate them. Making fun of someone for not knowing something, like how to read an analog clock or write in cursive, punishes them for a gap that was never their fault. Intent does not erase impact. If you step on someone's foot, it hurts whether you meant to or not. The mature response is not "I didn't mean to." It is "I'm sorry. I'll be more careful."</p>
+
+  <div class="callout callout-caution">
+    <div class="callout-label">Hard Truth</div>
+    <p>If multiple people have told you that something you do is hurtful, and your first reaction is to defend yourself rather than reflect, that defensiveness is the problem. Defensiveness protects your ego at the expense of your growth. The people giving you feedback are handing you a gift. The wrapping might be ugly, but the content is valuable.</p>
+  </div>
+
+  <h3>Common Patterns That Harm Others</h3>
+
+  <table class="strat-table">
+    <thead>
+      <tr><th>Pattern</th><th>What You Tell Yourself</th><th>What Others Experience</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Constant sarcasm</td><td>"I am just joking, they know I do not mean it"</td><td>"I never know if they actually respect me or if everything is a joke"</td></tr>
+      <tr><td>One-upping every story</td><td>"I am relating by sharing my experience"</td><td>"They never actually listen to me, everything becomes about them"</td></tr>
+      <tr><td>Dismissing other people's feelings</td><td>"I am being rational and helping them see perspective"</td><td>"My feelings are not safe with this person"</td></tr>
+      <tr><td>Being the loudest in every room</td><td>"I am just energetic and outgoing"</td><td>"There is no space for me when they are around"</td></tr>
+      <tr><td>Passive-aggressive comments</td><td>"I am not being mean, I am being honest"</td><td>"I always feel attacked but cannot pin down why"</td></tr>
+      <tr><td>Excluding people from plans</td><td>"We just have a tight group"</td><td>"I am not wanted"</td></tr>
+      <tr><td>Screen-checking during conversations</td><td>"I can multitask"</td><td>"What I am saying does not matter to them"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Accountability Is Not Punishment</h3>
+  <p>Recognizing harmful patterns is not about shame. It is about growth. The same neuroplasticity that lets you learn new study skills also lets you learn new social patterns. If you recognize yourself in any of the descriptions above, that awareness is not a condemnation. It is the starting point of meaningful change. Apologize to the people you have hurt. Not with "I'm sorry if you were offended," which puts the blame on them, but with "I'm sorry I did that. I am working on being better," which takes ownership.</p>
+
+  <div class="callout callout-growth">
+    <div class="callout-label">Growth Path</div>
+    <p>Change happens in small increments. Pick one pattern to work on this week. Just one. If you tend to interrupt, practice counting to three after someone stops talking before you respond. If you tend toward sarcasm, try giving one genuine compliment per day. If you dominate conversations, practice asking two questions for every statement you make. Small, consistent changes become new habits faster than dramatic overhauls.</p>
+  </div>
+
+  <h3>When Others Are Harming You</h3>
+  <p>This section also applies in reverse. If someone in your life consistently makes you feel small, anxious, or unsafe, you have the right to set boundaries. Boundaries are not confrontational. They are self-protective. "I do not appreciate being spoken to that way" is a complete sentence. If someone repeatedly crosses boundaries after being clearly told, that is a relationship you should reevaluate. You deserve to be treated with the same respect and consideration described in this guide, and you have the right to distance yourself from people who refuse to offer it.</p>
+</div>
+
+<!-- PROGRESS TRACKER -->
+<div class="progress-section">
+  <h3>Your Growth Checklist</h3>
+  <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.75rem;">Click to track your progress. These save locally in your browser. Start wherever feels right.</p>
+  <div id="progress-list">
+    <div class="progress-item" data-key="p1" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Tried active recall at least once</span></div>
+    <div class="progress-item" data-key="p2" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Studied for 25 minutes with phone in another room</span></div>
+    <div class="progress-item" data-key="p3" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Asked a question in class or office hours</span></div>
+    <div class="progress-item" data-key="p4" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Started a conversation with someone new</span></div>
+    <div class="progress-item" data-key="p5" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Wrote in a wins journal for at least 3 days</span></div>
+    <div class="progress-item" data-key="p6" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Set a screen time limit on one app</span></div>
+    <div class="progress-item" data-key="p7" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Did a post-class brain dump within 24 hours</span></div>
+    <div class="progress-item" data-key="p8" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Used the 5-4-3-2-1 technique during an anxious moment</span></div>
+    <div class="progress-item" data-key="p9" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Recognized a harmful pattern in myself and adjusted</span></div>
+    <div class="progress-item" data-key="p10" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Made it through a full week of consistent sleep schedule</span></div>
+    <div class="progress-item" data-key="p11" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Sent a professional email to a professor</span></div>
+    <div class="progress-item" data-key="p12" onclick="toggleProgress(this)"><div class="progress-check"></div><span class="progress-text">Genuinely listened to someone and asked a follow-up question</span></div>
+  </div>
+</div>
+
+<!-- INTERACTIVE SECTIONS -->
+<h2 class="interactive-header" id="interactive">Self-Assessments & Practice</h2>
+<p class="interactive-sub">Test your understanding, flip through key concepts, and practice putting ideas into your own words.</p>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('quiz')">Scenario Quiz</button>
+  <button class="tab-btn" onclick="showTab('flash')">Flashcards</button>
+  <button class="tab-btn" onclick="showTab('sa')">Reflective Writing</button>
+</div>
+
+<!-- QUIZ PANEL -->
+<div class="tab-panel active" id="panel-quiz">
+  <div id="quiz-container"></div>
+  <button class="quiz-check-btn" onclick="gradeQuiz()">Check My Answers</button>
+  <div class="quiz-score" id="quiz-score" style="display:none;"></div>
+</div>
+
+<!-- FLASHCARD PANEL -->
+<div class="tab-panel" id="panel-flash">
+  <div class="fc-filters" id="fc-filters"></div>
+  <div class="fc-grid" id="fc-grid"></div>
+</div>
+
+<!-- SELF-ASSESSMENT PANEL -->
+<div class="tab-panel" id="panel-sa">
+  <div id="sa-container"></div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Thrive: A Student Success & Confidence Guide</p>
+  <p style="margin-top: 0.3rem;">You showed up. That is step one. Now keep going.</p>
+</footer>
+
+<script>
+// ========== QUIZ DATA ==========
+const quizData = [
+  {q:"You are struggling in a class and feel embarrassed about it. What is the most effective first step?",
+   opts:["Drop the class before it gets worse","Post about it anonymously on social media to see if others relate","Visit the professor's office hours with specific questions about what confuses you","Study harder by rereading the textbook more times"],
+   ans:2, fb:"Visiting office hours with specific questions shows initiative, gives you direct expert help, and professors genuinely appreciate when students come prepared. Rereading is one of the least effective study strategies."},
+  {q:"You notice a classmate rolling their eyes every time someone asks a question in lecture. How does this likely affect the room?",
+   opts:["It has no real effect because most people do not notice","It creates a chilling effect where fewer people are willing to participate","It only affects the person who asked the question","It motivates others to ask better questions"],
+   ans:1, fb:"Visible dismissal of questions creates a chilling effect across the entire room. People who witness it become less willing to participate even if they were not the target. Small behaviors have outsized social impacts."},
+  {q:"Which of the following is the most effective study strategy according to cognitive science?",
+   opts:["Rereading your notes multiple times","Highlighting key passages in the textbook","Closing your notes and writing down everything you can remember","Listening to a recording of the lecture while doing other tasks"],
+   ans:2, fb:"Active recall, the practice of retrieving information from memory without looking at your notes, is one of the most robustly supported learning strategies in cognitive science. It strengthens memory far more than passive review."},
+  {q:"A friend tells you they are feeling overwhelmed and anxious. Which response is most supportive?",
+   opts:["\"Everyone feels that way, you'll be fine\"","\"Have you tried just not worrying about it?\"","\"That sounds really hard. What's weighing on you the most right now?\"","\"You should go talk to someone about that\""],
+   ans:2, fb:"Acknowledging someone's experience and asking a specific follow-up question shows genuine care without dismissing their feelings or immediately redirecting them elsewhere. Saying 'everyone feels that way' minimizes their experience."},
+  {q:"You realize you have been dominating group conversations and not leaving space for quieter members. What is the best first step?",
+   opts:["Stop talking entirely so others can contribute","Ask quieter members directly what they think after making your point","Assume they would speak up if they had something to say","Apologize publicly for talking too much"],
+   ans:1, fb:"Actively inviting others to contribute by asking for their thoughts creates space without the dramatic gesture of going silent. It demonstrates awareness and creates genuine inclusion. Assuming quiet people would speak up if they wanted to ignores the social dynamics at play."},
+  {q:"What is the primary reason social media negatively affects self-esteem?",
+   opts:["The content itself is harmful","People spend too much time on their phones","You compare the unfiltered reality of your life to the curated highlights of others","Social media prevents you from studying"],
+   ans:2, fb:"The core mechanism is an unfair comparison: you see other people's best moments, carefully curated and filtered, and your brain automatically compares them to the full, unedited experience of your own life. This creates a persistent sense of inadequacy."},
+  {q:"You bombed an exam. Which internal response is most productive?",
+   opts:["\"I'm just not smart enough for this class\"","\"The professor made the test unfair\"","\"I did not study effectively. What specifically did I get wrong, and what will I do differently?\"","\"I will just study twice as many hours next time\""],
+   ans:2, fb:"Treating failure as data rather than identity is the key distinction. Asking what specifically went wrong and changing your approach is productive. Studying more hours using the same ineffective methods will produce the same ineffective results."},
+  {q:"Someone apologizes to you with 'I'm sorry if you were offended.' What is problematic about this phrasing?",
+   opts:["Nothing, it is a perfectly fine apology","It shifts responsibility from the person who caused harm to the person who experienced it","It is too formal for casual situations","It addresses the issue too directly"],
+   ans:1, fb:"'I'm sorry if you were offended' frames the problem as the other person's emotional reaction rather than the speaker's behavior. A genuine apology takes ownership: 'I'm sorry I did that. I'll be more careful.'"},
+  {q:"Why is consistent sleep more important than total study hours for exam performance?",
+   opts:["Sleep makes you feel better, which improves confidence","Sleep is when your brain consolidates and organizes the information you learned during the day","Staying up late causes headaches that interfere with test-taking","Sleep has no direct effect on memory; it just reduces fatigue"],
+   ans:1, fb:"During sleep, particularly during slow-wave and REM sleep, your brain actively consolidates memories, strengthens neural connections, and organizes information. Pulling an all-nighter actually prevents the consolidation of everything you studied."},
+  {q:"Which of the following best describes the anxiety avoidance cycle?",
+   opts:["Anxiety leads to confrontation, which leads to resolution, which leads to peace","Anxiety leads to avoidance, which provides short-term relief, which teaches your brain that avoidance works, which increases future anxiety","Anxiety leads to medication, which leads to dependency, which leads to more anxiety","Anxiety is random and does not follow a predictable pattern"],
+   ans:1, fb:"The avoidance cycle is self-reinforcing: each time you avoid an anxiety-provoking situation, the temporary relief teaches your brain that the situation was genuinely dangerous. The next encounter produces even stronger anxiety, creating an escalating loop."},
+  {q:"Your roommate frequently makes sarcastic comments about your study habits. You have mentioned it bothers you, but they continue. What is the most appropriate response?",
+   opts:["Make sarcastic comments back so they understand how it feels","Accept it as just their personality","Set a clear boundary: 'I have asked you to stop making those comments. I need you to respect that.'","Stop studying around them to avoid the situation"],
+   ans:2, fb:"Setting a clear, direct boundary after you have already communicated your discomfort is appropriate and healthy. Accepting harmful behavior as 'just their personality' normalizes it. Retaliating escalates conflict. Avoidance reinforces the pattern."},
+  {q:"What is the most effective way to start a conversation with someone you do not know?",
+   opts:["Wait until you think of something clever or impressive to say","Make a comment about something you both share in the moment, like the class or the environment","Send them a message on social media first to break the ice","Ask someone else to introduce you"],
+   ans:1, fb:"Commenting on a shared experience is the lowest-barrier, most natural way to initiate conversation. Waiting for something clever creates analysis paralysis. In-person initiation builds social skills more effectively than digital approaches."},
+  {q:"A student who went through high school during COVID feels they missed fundamental skills. What is the most accurate framing of their situation?",
+   opts:["They have a permanent learning deficit that will always put them behind","They have an exposure gap that can be closed through deliberate practice","They are less intelligent than students who were not affected by COVID","They should have taught themselves during the pandemic"],
+   ans:1, fb:"The distinction between an exposure gap and a fixed deficit is critical. Skills that were not taught can be learned. The gap is a circumstance, not a character trait, and deliberate practice can close it efficiently."},
+  {q:"Which of the following is an example of the 'testing effect' in practice?",
+   opts:["Taking a practice exam under timed conditions","Rereading your notes while testing whether you recognize the material","Having a friend quiz you verbally on key concepts","Both the first and third options"],
+   ans:3, fb:"Both practice exams and verbal quizzing by a friend involve active retrieval of information from memory, which is the mechanism behind the testing effect. Rereading and recognizing material is passive review, not retrieval practice."},
+  {q:"You are in a group project and one member is not contributing. What approach is most effective?",
+   opts:["Do their work for them to avoid conflict","Report them to the professor immediately","Reach out directly and kindly: 'Hey, checking in on your section. Do you need help with anything?'","Complain about them to the other group members"],
+   ans:2, fb:"Direct, kind communication addresses the issue while offering support. There may be something going on that you do not know about. Doing their work enables the pattern, complaining creates toxicity, and reporting should be a last resort after direct communication has been attempted."},
+  {q:"What makes the Pomodoro Technique effective for students who struggle with focus?",
+   opts:["It forces you to study for long periods without breaks","It makes the study session feel finite rather than overwhelming by breaking it into 25-minute blocks","It uses background music to improve concentration","It requires studying with a partner for accountability"],
+   ans:1, fb:"The Pomodoro Technique works because 25 minutes feels manageable even when a full study session feels impossible. The built-in breaks prevent cognitive fatigue and the timer creates a sense of urgency that combats procrastination."},
+  {q:"Someone posts a health tip on TikTok that goes viral. Before believing it, which question is LEAST important to ask?",
+   opts:["What credentials does this person have in this field?","How many likes and shares does the post have?","What are they trying to sell or promote?","Would a credible expert agree with this claim?"],
+   ans:1, fb:"Popularity (likes and shares) has zero correlation with accuracy. Viral content spreads because it is emotionally engaging or surprising, not because it is true. Checking credentials, motives, and expert consensus are all more reliable filters."},
+  {q:"The concept of neuroplasticity is most relevant to this guide because it means:",
+   opts:["Your brain stops developing after age 25","Your personality is fixed by your teenage years","Your brain can form new neural pathways and change behavioral patterns at any age through practice","Intelligence is entirely determined by genetics"],
+   ans:2, fb:"Neuroplasticity is the foundation of this entire guide. Every strategy, from new study methods to new social skills to new emotional regulation patterns, works because your brain is capable of rewiring itself in response to repeated practice. This capacity does not expire."},
+  {q:"What is the most important habit to establish for the transition from high school to college?",
+   opts:["Making friends in the first week","Getting perfect grades in your first semester","Building a weekly planning system that accounts for deadlines, study time, meals, and rest","Joining as many clubs as possible"],
+   ans:2, fb:"A weekly planning system is foundational because it structures everything else: study time, social activities, self-care, and deadlines. Without a system, even motivated students struggle because college offers far less external structure than high school."},
+  {q:"A friend says 'I'm sorry you feel that way' after hurting your feelings. This is an example of:",
+   opts:["A genuine, heartfelt apology","A non-apology that shifts responsibility to the person who was hurt","An appropriate response when the situation is ambiguous","A healthy boundary-setting statement"],
+   ans:1, fb:"'I'm sorry you feel that way' acknowledges your emotional reaction but takes no responsibility for the behavior that caused it. A genuine apology sounds like: 'I'm sorry I said that. It was wrong, and I will work on doing better.'"},
+];
+
+// ========== FLASHCARD DATA ==========
+const flashcards = [
+  {cat:"Study Skills",q:"What is active recall?",a:"Closing your notes and retrieving information from memory, such as writing down everything you remember. This strengthens memory traces far more effectively than rereading."},
+  {cat:"Study Skills",q:"What is spaced repetition?",a:"Reviewing material at increasing intervals (1 day, 3 days, 7 days, 14 days). It catches information right as it begins to fade, maximizing long-term retention."},
+  {cat:"Study Skills",q:"What is interleaving?",a:"Mixing different topics within a single study session rather than studying one topic at a time. Improves your ability to discriminate between concepts."},
+  {cat:"Study Skills",q:"What is the Pomodoro Technique?",a:"25 minutes of focused work followed by a 5-minute break. Makes tasks feel finite and manageable, combats procrastination and cognitive fatigue."},
+  {cat:"Study Skills",q:"What is the testing effect?",a:"The finding that actively retrieving information from memory strengthens that memory more than passively reviewing it. Practice testing is one of the most effective study strategies."},
+  {cat:"Study Skills",q:"What is elaborative interrogation?",a:"Asking 'why?' and 'how?' after every fact or concept. Creates deeper encoding by connecting new information to what you already know."},
+  {cat:"Study Skills",q:"What is the teach-back method?",a:"Explaining a concept out loud as if teaching someone who knows nothing about it. Exposes gaps in understanding that you did not realize you had."},
+  {cat:"Study Skills",q:"What are Cornell Notes?",a:"A note-taking system: notes on the right, cue questions on the left, summary at the bottom. Creates a built-in self-testing and review system."},
+  {cat:"Study Skills",q:"What is a post-class brain dump?",a:"Within 24 hours of class, writing down everything you remember without looking at notes. This single habit is more valuable than hours of review later."},
+  {cat:"Study Skills",q:"Why is rereading an ineffective study method?",a:"It creates a false sense of familiarity (recognition) without building the retrieval pathways needed for actual recall on an exam. Feeling like you know it is not the same as being able to produce it."},
+  {cat:"Anxiety & Help",q:"What is the anxiety avoidance cycle?",a:"Anticipate discomfort, body produces stress hormones, avoid the situation for relief, relief teaches brain avoidance works, next time anxiety is stronger. Broken only by doing the uncomfortable thing."},
+  {cat:"Anxiety & Help",q:"What is the 5-4-3-2-1 grounding technique?",a:"Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste. Forces prefrontal cortex online by giving it a concrete task, interrupting emotional hijack."},
+  {cat:"Anxiety & Help",q:"Why do professors appreciate office hours visits?",a:"Most students never come. When you show up with specific questions and evidence of effort, you are doing exactly what professors wish more students would do. You are not bothering them."},
+  {cat:"Anxiety & Help",q:"How should you frame asking for help?",a:"Show what you have tried, identify the specific point of confusion, and frame it as problem-solving. Example: 'I worked through X and got stuck at Y. Here is what I tried.'"},
+  {cat:"Anxiety & Help",q:"When should you reach out for support beyond self-help strategies?",a:"When anxiety is keeping you from showing up to class, finishing work, sleeping, or connecting with people. That is when you talk to someone: a mentor, a campus counselor, an advisor. Getting help is not a diagnosis. It is good judgment."},
+  {cat:"Anxiety & Help",q:"What is the 3-second rule for social anxiety?",a:"When you want to talk to someone, say something within 3 seconds before your brain generates reasons not to. The words matter less than the act of initiating."},
+  {cat:"Anxiety & Help",q:"Why should you collect mentors?",a:"Mentors are people further down the road who are willing to look back and help. Professors, advisors, upperclassmen, counselors, coaches. They tell you the truth, help you navigate challenges, and make the path less isolating. The strongest people learned to build this network early."},
+  {cat:"Social Skills",q:"What is the most effective way to start a conversation?",a:"Comment on something shared: the class, the environment, the assignment. 'How are you finding this class?' is perfectly sufficient. You do not need a clever opening."},
+  {cat:"Social Skills",q:"Why is listening the most underrated social skill?",a:"Most people wait for their turn to talk rather than truly listening. If you genuinely listen, ask follow-up questions, and remember details, you will be perceived as exceptionally interesting."},
+  {cat:"Social Skills",q:"How do you handle group projects effectively?",a:"Volunteer to create the shared document or group chat. Set clear deadlines. Follow up gently. Address issues directly but kindly: 'Checking in on your section. Need help?'"},
+  {cat:"Social Skills",q:"What does it mean to be a 'safe' person?",a:"When someone shares something vulnerable, you do not laugh, dismiss, or redirect to yourself. You make space for quieter people. You are aware that the room is not just about you."},
+  {cat:"Social Skills",q:"What is active listening?",a:"Fully focusing on what someone is saying, asking follow-up questions based on their actual words, and remembering details for later. The opposite of waiting for your turn to talk."},
+  {cat:"Social Skills",q:"How do you set a healthy boundary?",a:"State it clearly and directly: 'I do not appreciate being spoken to that way.' A boundary is not confrontational. It is self-protective. It is a complete statement that does not require justification."},
+  {cat:"Digital Wellness",q:"Why does social media decrease self-esteem?",a:"You compare the unfiltered reality of your own life to the curated, edited highlights of others. This comparison is inherently unfair, and your brain does not naturally adjust for it."},
+  {cat:"Digital Wellness",q:"What should you ask before believing something on social media?",a:"What is this person's actual expertise? What are they selling? Who benefits if I believe this? Would a credible expert agree? Popularity (likes) has zero correlation with accuracy."},
+  {cat:"Digital Wellness",q:"Why should you not check your phone first thing in the morning?",a:"It starts your day in reactive mode, responding to other people's agendas rather than your own. It spikes cortisol and sets a scattered, anxious tone for the day."},
+  {cat:"Digital Wellness",q:"What is doomscrolling and why is it harmful?",a:"Compulsively scrolling through negative news or content, usually before bed. Activates stress responses, disrupts melatonin production, and significantly degrades sleep quality."},
+  {cat:"Digital Wellness",q:"How does phone proximity affect studying?",a:"Your brain knows your phone is nearby even when it is face down. Cognitive resources are spent resisting the urge to check it. Physically removing the phone from the room eliminates this drain."},
+  {cat:"Confidence",q:"What is the confidence equation?",a:"Confidence = evidence of competence. You do not become confident then act. You act then become confident. Each survived challenge is stored as evidence of capability."},
+  {cat:"Confidence",q:"What is a wins journal?",a:"Writing down 3 things each day that required effort or courage, no matter how small. Counteracts the brain's negativity bias by building a visible record of capability."},
+  {cat:"Confidence",q:"How should you reframe failure?",a:"Replace 'I failed' with 'I collected data.' A bad exam score tells you what you did not understand. A conversation that went poorly teaches you what to try differently. Failure is feedback, not identity."},
+  {cat:"Confidence",q:"What is an exposure gap vs. a deficit?",a:"An exposure gap means you were not taught something. A deficit means you cannot learn it. Almost everything students feel 'behind' on is an exposure gap, which can be closed through deliberate practice."},
+  {cat:"Confidence",q:"What is neuroplasticity and why does it matter?",a:"The brain's ability to form new neural pathways through practice. It means every skill in this guide, from study methods to social skills to emotional regulation, is learnable at any age."},
+  {cat:"Accountability",q:"Why is 'I'm sorry if you were offended' a poor apology?",a:"It shifts blame from the person who caused harm to the person who experienced it. A genuine apology: 'I'm sorry I did that. I will work on being better.' Ownership, not deflection."},
+  {cat:"Accountability",q:"What is the difference between intent and impact?",a:"Intent is what you meant. Impact is what the other person experienced. Unintentional harm is still harm. If you step on someone's foot, it hurts regardless of whether you meant to."},
+  {cat:"Accountability",q:"Why is constant sarcasm harmful even when meant as humor?",a:"The recipient never knows if you genuinely respect them or if everything is a joke. It creates persistent uncertainty and insecurity, even when the sarcasm is not malicious in intent."},
+  {cat:"Accountability",q:"What is the ripple effect of social behavior?",a:"Emotions and behaviors spread through networks. Kindness to one person makes them more likely to be kind to others. Cruelty propagates the same way. Every interaction sets a tone beyond itself."},
+  {cat:"Accountability",q:"How do you start changing a harmful social pattern?",a:"Pick one pattern. Work on just that one. If you interrupt, count to three before responding. If sarcastic, give one genuine compliment daily. Small consistent changes become new habits."},
+  {cat:"Accountability",q:"What is defensiveness and why does it block growth?",a:"The automatic urge to defend yourself when receiving feedback. It protects your ego at the expense of your growth. If multiple people tell you something is hurtful, the feedback is the gift."},
+  {cat:"Life Skills",q:"Why is the weekly planning session important?",a:"If something is not on your calendar, it probably will not happen. 20 minutes on Sunday to map deadlines, study blocks, meals, and rest creates structure that replaces the external scaffolding of high school."},
+  {cat:"Life Skills",q:"What is the two-minute rule?",a:"If a task takes less than two minutes, do it now. Tiny deferred tasks accumulate into overwhelming piles. Handling them immediately keeps your mental load manageable."},
+  {cat:"Life Skills",q:"Why is consistent sleep more important than extra study hours?",a:"Sleep is when your brain consolidates and organizes information from the day. Pulling an all-nighter prevents the very memory consolidation that makes studying effective."},
+  {cat:"Life Skills",q:"What are the 5 basic meals every college student should learn?",a:"Eggs (scrambled, fried, or boiled), pasta with sauce, a basic stir-fry, simple soup, and a grain bowl. These cover nutrition basics and are all learnable in an afternoon."},
+  {cat:"Life Skills",q:"What is proper email etiquette for contacting a professor?",a:"Subject line describing your purpose, greeting with their title, clear and concise request, thank you, and a signature with your full name and course information."},
+];
+
+// ========== SELF-ASSESSMENT DATA ==========
+const saData = [
+  {q:"Describe the anxiety avoidance cycle and explain why avoiding an anxiety-provoking situation makes the anxiety worse next time.",
+   concepts:[
+     {term:"anticipation",syns:["anticipate","expect","dread","worry before"],weight:1},
+     {term:"avoidance",syns:["avoid","escape","flee","withdraw","not doing"],weight:2},
+     {term:"relief",syns:["relief","temporary","short-term","feel better"],weight:1.5},
+     {term:"reinforcement",syns:["reinforc","teaches brain","learns","confirms","reward"],weight:2},
+     {term:"escalation",syns:["worse","stronger","increase","escalat","intensif","bigger"],weight:2},
+     {term:"break cycle",syns:["break","do the thing","face","confront","exposure","survive"],weight:1.5}
+   ],
+   model:"The anxiety avoidance cycle begins when you anticipate something uncomfortable and your body produces stress hormones. You then avoid the situation to get relief from the discomfort. However, this relief reinforces your brain's belief that the situation was genuinely dangerous, so the next time you encounter it, the anxiety response is stronger. The only way to break the cycle is to actually do the anxiety-provoking thing and survive it, which teaches your brain to recalibrate the threat level downward."},
+  {q:"Explain why rereading notes is ineffective and describe at least two evidence-based alternatives.",
+   concepts:[
+     {term:"passive",syns:["passive","recognition","familiar","illusion of knowing"],weight:2},
+     {term:"no retrieval",syns:["no retrieval","not recall","doesn't require","not pulling from memory"],weight:1.5},
+     {term:"active recall",syns:["active recall","close notes","retrieve","write from memory","brain dump"],weight:2},
+     {term:"spaced repetition",syns:["spaced","interval","spread out","revisit","schedule review"],weight:2},
+     {term:"testing effect",syns:["testing effect","practice test","quiz yourself","self-test"],weight:1.5},
+     {term:"interleaving",syns:["interleav","mix topics","alternate","switch between"],weight:1}
+   ],
+   model:"Rereading is ineffective because it creates an illusion of familiarity without actually building the retrieval pathways needed for recall on an exam. It is a passive process where your brain recognizes material rather than actively producing it. Two superior alternatives are active recall (closing your notes and writing down everything you remember, which forces retrieval and strengthens memory traces) and spaced repetition (reviewing material at increasing intervals to catch information right as it begins to fade). Both leverage the testing effect, which is one of the most replicated findings in learning science."},
+  {q:"Explain the difference between intent and impact when it comes to how we treat others. Give an example.",
+   concepts:[
+     {term:"intent",syns:["intent","meant","purpose","trying to","didn't mean"],weight:1.5},
+     {term:"impact",syns:["impact","effect","experience","felt","received","hurt"],weight:2},
+     {term:"still harmful",syns:["still harm","still hurt","doesn't erase","doesn't matter","regardless"],weight:2},
+     {term:"ownership",syns:["own","responsibility","accountab","apologize","acknowledge"],weight:2},
+     {term:"example",syns:["example","instance","like when","such as","for instance","scenario"],weight:1}
+   ],
+   model:"Intent is what you meant by your words or actions, while impact is what the other person actually experienced. The key principle is that unintentional harm is still harm. If you step on someone's foot, it hurts whether you meant to step on it or not. For example, making a sarcastic joke about a friend's study habits might be intended as humor, but the impact might be that they feel mocked and stop studying around you. The mature response is not to defend your intent but to take ownership of your impact and adjust your behavior."},
+  {q:"Why does social media consumption tend to lower self-esteem, and what are two practical strategies to protect your mental health while still using it?",
+   concepts:[
+     {term:"comparison",syns:["compar","curated","highlight reel","filtered","edited","best moments"],weight:2},
+     {term:"unfair",syns:["unfair","unfiltered","behind the scenes","real vs","asymmetr"],weight:1.5},
+     {term:"dopamine",syns:["dopamine","engineered","designed","addictive","behavioral psychology","exploit"],weight:1},
+     {term:"time limits",syns:["time limit","screen time","restrict","cap","reduce usage","set limit"],weight:2},
+     {term:"curate feed",syns:["curate","unfollow","filter","choose what","intentional","remove accounts"],weight:2},
+     {term:"boundaries",syns:["boundar","no phone","morning","bedtime","before sleep","after wak"],weight:1.5}
+   ],
+   model:"Social media lowers self-esteem primarily through unfair comparison: you see other people's curated, filtered highlight reels and your brain compares them to the unfiltered, messy reality of your own life. The platforms are also engineered by behavioral psychologists to maximize engagement through dopamine exploitation. Two practical strategies include setting daily time limits on specific apps using built-in screen time tools, and intentionally curating your feed by unfollowing any account that consistently makes you feel worse about yourself while adding accounts that educate, genuinely entertain, or inspire real action."},
+  {q:"Describe what it means to be a 'safe person' for others and explain why this matters in a college environment.",
+   concepts:[
+     {term:"not dismiss",syns:["not dismiss","don't laugh","don't mock","don't ridicule","validate","acknowledge"],weight:2},
+     {term:"listen",syns:["listen","hear","pay attention","present","not interrupt"],weight:1.5},
+     {term:"make space",syns:["make space","include","room for","quiet people","not dominate"],weight:2},
+     {term:"vulnerability",syns:["vulnerab","share","open up","trust","safe to be"],weight:1.5},
+     {term:"ripple effect",syns:["ripple","spread","contagion","tone","environment","community","culture"],weight:1.5},
+     {term:"anxiety",syns:["anxiety","anxious","struggling","scared","nervous","afraid"],weight:1}
+   ],
+   model:"Being a safe person means that when someone shares something vulnerable, you do not laugh, dismiss, or redirect the conversation to yourself. It means listening without interrupting, making space for quieter voices rather than dominating every conversation, and being aware that your reactions to others' questions and contributions affect the entire room's willingness to participate. In a college environment, this is especially critical because many students are already dealing with anxiety and a fragile sense of belonging. The ripple effect of safe behavior creates a community where people feel comfortable taking the academic and social risks necessary for growth."},
+  {q:"Explain the concept of neuroplasticity and why it means that feeling 'behind' your peers is a temporary state, not a permanent one.",
+   concepts:[
+     {term:"neuroplasticity",syns:["neuroplastic","brain change","rewire","new pathway","neural"],weight:2},
+     {term:"practice",syns:["practice","repetit","deliberate","training","exercise","effort"],weight:2},
+     {term:"any age",syns:["any age","doesn't stop","lifelong","not fixed","continues"],weight:1.5},
+     {term:"exposure gap",syns:["exposure","not taught","missed","gap","circumstance","not exposed"],weight:2},
+     {term:"learnable",syns:["learn","develop","acquire","build","grow","improve","close the gap"],weight:1.5}
+   ],
+   model:"Neuroplasticity is the brain's ability to form new neural connections and reorganize itself in response to learning and experience. It means that your brain is not fixed; it physically changes when you practice new skills. This is directly relevant to feeling behind because most gaps students experience are exposure gaps, not deficits. You were not taught certain things, so you did not learn them, but that is entirely different from being unable to learn them. Because neuroplasticity continues throughout life, every skill, from study strategies to social abilities to emotional regulation, can be developed through deliberate practice at any age."},
+  {q:"What is the weekly planning session and why is it especially important for students transitioning from high school to college?",
+   concepts:[
+     {term:"sunday review",syns:["sunday","weekly","plan ahead","look at week","review upcoming"],weight:1},
+     {term:"calendar",syns:["calendar","schedule","planner","block time","write down"],weight:2},
+     {term:"deadlines",syns:["deadline","assignment","due date","commitment","appointment"],weight:1.5},
+     {term:"study blocks",syns:["study block","study time","non-negotiable","appointment with yourself"],weight:2},
+     {term:"less structure",syns:["less structure","no one remind","freedom","responsibility","no parent","no teacher"],weight:2},
+     {term:"system vs willpower",syns:["system","not willpower","habit","routine","structure replaces"],weight:1.5}
+   ],
+   model:"The weekly planning session is a 20-minute practice, typically on Sunday evening, where you review all upcoming deadlines, appointments, classes, and commitments for the week ahead, then block specific time for studying, meals, exercise, and rest. It is especially critical for the high school to college transition because college provides dramatically less external structure. No one reminds you about assignments, wakes you up, or monitors your progress. The students who thrive are not those with the most willpower but those who build systems that replace the scaffolding that high school provided. If something is not on your calendar, it probably will not happen."},
+  {q:"Describe the 'confidence equation' and explain why waiting to feel confident before taking action is counterproductive.",
+   concepts:[
+     {term:"evidence",syns:["evidence","proof","data","experience","track record"],weight:2},
+     {term:"action first",syns:["action first","do then feel","act then","take action","not wait"],weight:2},
+     {term:"survive",syns:["survive","get through","make it","live through","handle"],weight:1.5},
+     {term:"accumulate",syns:["accumulate","compound","build up","over time","stack","grow"],weight:1.5},
+     {term:"small steps",syns:["small","tiny","incremental","baby step","gradually","one thing"],weight:1.5},
+     {term:"not feeling",syns:["not a feeling","not wait","doesn't come first","result of","byproduct"],weight:1}
+   ],
+   model:"The confidence equation states that confidence equals evidence of competence. It is not a feeling you wait for but a result that emerges from repeated action. Waiting to feel confident before acting is counterproductive because confidence only develops through the accumulation of evidence that you can handle challenges. Each time you do something that scares you and survive it, your brain stores that experience as proof of capability. The key is to start absurdly small: raise your hand once, study for 25 minutes, say hello to one person. These small actions generate real evidence that compounds over time into genuine confidence."},
+];
+
+// ========== TAB SYSTEM ==========
+function showTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+}
+
+// ========== QUIZ ENGINE ==========
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  let html = '';
+  quizData.forEach((q, i) => {
+    html += `<div class="quiz-q" id="qq${i}"><div class="qnum">Question ${i+1} of ${quizData.length}</div><div class="qtext">${q.q}</div>`;
+    q.opts.forEach((o, j) => {
+      html += `<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`;
+    });
+    html += `<div class="quiz-fb" id="qfb${i}"></div></div>`;
+  });
+  c.innerHTML = html;
+}
+
+function gradeQuiz() {
+  let score = 0;
+  quizData.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const fb = document.getElementById(`qfb${i}`);
+    if (sel) {
+      if (parseInt(sel.value) === q.ans) {
+        score++;
+        fb.className = 'quiz-fb correct';
+        fb.innerHTML = '<strong>Correct!</strong> ' + q.fb;
+      } else {
+        fb.className = 'quiz-fb incorrect';
+        fb.innerHTML = '<strong>Not quite.</strong> ' + q.fb;
+      }
+    } else {
+      fb.className = 'quiz-fb incorrect';
+      fb.innerHTML = '<strong>No answer selected.</strong> ' + q.fb;
+    }
+    fb.style.display = 'block';
+  });
+  const sd = document.getElementById('quiz-score');
+  sd.style.display = 'block';
+  sd.innerHTML = `You scored <strong>${score}</strong> out of <strong>${quizData.length}</strong> (${Math.round(score/quizData.length*100)}%)`;
+}
+
+// ========== FLASHCARD ENGINE ==========
+function buildFlashcards() {
+  const cats = [...new Set(flashcards.map(f => f.cat))];
+  const filtersDiv = document.getElementById('fc-filters');
+  let fhtml = '<button class="fc-filter-btn active" onclick="filterFC(\'all\',this)">All</button>';
+  cats.forEach(c => {
+    fhtml += `<button class="fc-filter-btn" onclick="filterFC('${c}',this)">${c}</button>`;
+  });
+  filtersDiv.innerHTML = fhtml;
+  renderFC('all');
+}
+
+function renderFC(cat) {
+  const grid = document.getElementById('fc-grid');
+  const filtered = cat === 'all' ? flashcards : flashcards.filter(f => f.cat === cat);
+  let html = '';
+  filtered.forEach((f, i) => {
+    html += `<div class="fc" onclick="this.classList.toggle('fl')"><div class="fci"><div class="fcfr"><div class="t">${f.cat}</div><div class="q">${f.q}</div><div class="h">Click to flip</div></div><div class="fcbk"><div class="t">Answer</div><div class="a">${f.a}</div></div></div></div>`;
+  });
+  grid.innerHTML = html;
+}
+
+function filterFC(cat, btn) {
+  document.querySelectorAll('.fc-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFC(cat);
+}
+
+// ========== SELF-ASSESSMENT ENGINE ==========
+function buildSA() {
+  const c = document.getElementById('sa-container');
+  let html = '';
+  saData.forEach((q, i) => {
+    html += `<div class="sa-q"><div class="qn">Reflection ${i+1}</div><div class="qt">${q.q}</div>`;
+    html += `<textarea class="sa-ta" id="sa-ta-${i}" placeholder="Write your response here..."></textarea>`;
+    html += `<button class="sa-btn" onclick="gradeSA(${i})">Check My Response</button>`;
+    html += `<div class="sa-result" id="sa-res-${i}"><div class="sa-pct" id="sa-pct-${i}"></div><div class="sa-bar-wrap"><div class="sa-bar" id="sa-bar-${i}"></div></div><div class="sa-tags" id="sa-tags-${i}"></div><span class="sa-model-toggle" onclick="toggleModel(${i})">Show model answer</span><div class="sa-model" id="sa-mod-${i}">${q.model}</div></div></div>`;
+  });
+  c.innerHTML = html;
+}
+
+function gradeSA(idx) {
+  const text = document.getElementById(`sa-ta-${idx}`).value.toLowerCase();
+  const q = saData[idx];
+  let totalWeight = 0, earnedWeight = 0;
+  const hits = [], misses = [];
+  q.concepts.forEach(c => {
+    totalWeight += c.weight;
+    const found = c.syns.some(s => text.includes(s.toLowerCase()));
+    if (found) { earnedWeight += c.weight; hits.push(c.term); }
+    else { misses.push(c.term); }
+  });
+  // word count bonus
+  const wc = text.split(/\s+/).filter(w => w).length;
+  const wcBonus = Math.min(wc / 80, 0.15);
+  let pct = Math.min(Math.round((earnedWeight / totalWeight + wcBonus) * 100), 100);
+
+  const resDiv = document.getElementById(`sa-res-${idx}`);
+  resDiv.style.display = 'block';
+  const pctDiv = document.getElementById(`sa-pct-${idx}`);
+  const barDiv = document.getElementById(`sa-bar-${idx}`);
+  const tagsDiv = document.getElementById(`sa-tags-${idx}`);
+
+  const color = pct >= 75 ? '#2e7d5e' : pct >= 50 ? '#c17a3a' : '#c0392b';
+  pctDiv.innerHTML = `<span style="color:${color}">${pct}% concept coverage</span>`;
+  barDiv.style.width = pct + '%';
+  barDiv.style.background = color;
+
+  let tagHTML = '';
+  hits.forEach(h => tagHTML += `<span class="sa-tag hit">${h}</span>`);
+  misses.forEach(m => tagHTML += `<span class="sa-tag miss">${m}</span>`);
+  tagsDiv.innerHTML = tagHTML;
+}
+
+function toggleModel(idx) {
+  const m = document.getElementById(`sa-mod-${idx}`);
+  m.style.display = m.style.display === 'none' || !m.style.display ? 'block' : 'none';
+}
+
+// ========== PROGRESS TRACKER ==========
+function toggleProgress(el) {
+  el.classList.toggle('done');
+  const check = el.querySelector('.progress-check');
+  check.innerHTML = el.classList.contains('done') ? '&#10003;' : '';
+  // Save to localStorage
+  const key = el.dataset.key;
+  const state = JSON.parse(localStorage.getItem('thrive-progress') || '{}');
+  state[key] = el.classList.contains('done');
+  localStorage.setItem('thrive-progress', JSON.stringify(state));
+}
+
+function loadProgress() {
+  const state = JSON.parse(localStorage.getItem('thrive-progress') || '{}');
+  Object.keys(state).forEach(key => {
+    if (state[key]) {
+      const el = document.querySelector(`[data-key="${key}"]`);
+      if (el) { el.classList.add('done'); el.querySelector('.progress-check').innerHTML = '&#10003;'; }
+    }
+  });
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', () => {
+  buildQuiz();
+  buildFlashcards();
+  buildSA();
+  loadProgress();
+});
+</script>
+</body>
+</html>
