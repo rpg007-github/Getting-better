@@ -1,4 +1,101 @@
 <!DOCTYPE html>
+<!--
+=============================================================
+  FILE: Thrive — A Student Success & Confidence Guide
+  SERIES: Student Success / College Readiness (standalone)
+  LEVEL: High school seniors / first-year college students
+=============================================================
+
+  WHAT THIS FILE IS:
+  A single-file, self-contained HTML study-skills and personal
+  development guide aimed at students transitioning from high
+  school to college. Written in a direct, non-judgmental voice
+  with practical strategies grounded in cognitive science.
+
+  CONTENT COVERAGE (10 guide sections):
+  01 — You Are Not Behind (growth mindset; COVID gaps; exposure vs. deficit)
+  02 — How to Actually Study (active recall, spaced repetition, interleaving,
+        teach-back, Cornell notes, Pomodoro; before/during/after class)
+  03 — Managing Anxiety & Asking for Help (avoidance cycle; 5-4-3-2-1;
+        office hours scripts; when to seek professional support)
+  04 — Reading, Writing, & the Skills Nobody Taught You (SQ3R; college writing;
+        practical skill gaps; collecting mentors)
+  05 — Navigating Social Media & Digital Noise (comparison trap; dopamine design;
+        digital boundary strategies; critical consumption)
+  06 — Talking to People in Real Life (conversation initiation; listening;
+        group project strategies; 3-second rule)
+  07 — Being the Person Others Feel Safe Around (psychological safety;
+        behavior/impact table; ripple effect of social contagion)
+  08 — Time Management & Adulting Basics (weekly planning; two-minute rule;
+        sleep science; adulting skills table)
+  09 — Building Your Confidence Playbook (confidence equation; wins journal;
+        handling failure; reframing)
+  10 — When You Are the Problem (intent vs. impact; harmful patterns table;
+        accountability without shame; setting boundaries)
+
+  INTERACTIVE FEATURES:
+  • Progress Tracker — 12 clickable checklist items (state saved to localStorage)
+  • Scenario Quiz — 20 scenario-based multiple-choice questions with
+    per-question feedback and final score
+  • Flashcards — 44 cards across 6 categories (Study Skills, Anxiety & Help,
+    Social Skills, Digital Wellness, Confidence, Accountability, Life Skills)
+    with 3D flip animation and category filter buttons
+  • Reflective Writing — 8 open-ended questions with weighted keyword/synonym
+    grading engine and expandable model answers
+
+  TAB STRUCTURE:
+  • #panel-quiz   → scenario quiz
+  • #panel-flash  → flashcard grid with category filters
+  • #panel-sa     → reflective writing / self-assessment
+
+  DESIGN:
+  • Warm off-white theme: --bg #faf8f5, --bg-card #ffffff
+  • Accent palette: green (#2e7d5e / dark #1b5e40), warm (#c17a3a),
+    warning gold, reflect blue (#5b6abf), caution red
+  • Fonts: Crimson Pro (serif headings), Source Sans 3 (body),
+    JetBrains Mono (labels/mono) — all via Google Fonts
+  • Callout types: growth (green), warning (gold), reflect (blue), caution (red)
+  • Responsive: mobile breakpoint at 640px
+
+  ACCESSIBILITY (WCAG 2.1 AA):
+  • Skip-to-main-content link
+  • Visible :focus-visible outlines (3px #005fcc)
+  • All color pairs meet 4.5:1 contrast minimum:
+    - .callout-label colors darkened per background
+    - opacity-based dimming replaced with solid accessible colors
+    - sa-tag.miss, strat-table th, scenario-label all corrected
+  • prefers-reduced-motion disables flip animation
+  • Semantic <header role="banner"> and existing <footer>
+  • Collapsible disclaimer banner at page top (replaces inline bottom div)
+  • All <button> elements have explicit type="button"
+  • Tab buttons have role="tab", aria-selected, aria-controls
+  • Tab panels have role="tabpanel" and aria-labelledby
+  • .toc .num and .snum spans have aria-hidden="true"
+  • Flashcard grid items have role="button", tabindex, Enter/Space handler,
+    dynamic aria-label; decorative .t and .h spans have aria-hidden="true"
+  • showTab() updated to use parameter instead of event.target
+
+  JAVASCRIPT STRUCTURE:
+  • showTab(tab) — activates tab panel and sets aria-selected
+  • quizData[] — 20 scenario questions with opts, ans, fb fields
+  • buildQuiz() — renders quiz to #quiz-container
+  • gradeQuiz() — grades all questions and shows score
+  • flashcards[] — 44 cards with cat, q, a fields
+  • buildFlashcards() — builds category filter buttons and renders cards
+  • renderFC(cat) — renders filtered flashcard grid
+  • filterFC(cat, btn) — applies category filter
+  • flipFC(el) — toggles flip and updates aria-label
+  • saData[] — 8 reflective writing prompts with concept/synonym graders
+  • buildSA() — renders reflective writing cards
+  • gradeSA(idx) — grades response with keyword matching
+  • toggleModel(idx) — shows/hides model answer
+  • toggleProgress(el) — toggles checklist item and saves to localStorage
+  • loadProgress() — restores checklist state from localStorage
+  • toggleDisclaimer() — open/close disclaimer banner
+
+  LAST MODIFIED: Applied WCAG 2.1 AA accessibility fixes
+=============================================================
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -75,8 +172,8 @@
     }
     .toc a:hover { background: var(--accent-light); color: var(--accent); }
     .toc a .num {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent);
-      min-width: 1.8rem; opacity: 0.7;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #24624a;
+      min-width: 1.8rem;
     }
 
     /* Section Cards */
@@ -93,7 +190,7 @@
     }
     .section-card h2 .snum {
       font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); opacity: 0.6;
+      text-transform: uppercase; letter-spacing: 0.1em; color: #24624a;
     }
     .section-card h3 {
       font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 500;
@@ -113,11 +210,11 @@
       font-weight: 500;
     }
     .callout-growth { background: var(--growth-bg); border-color: var(--growth); }
-    .callout-growth .callout-label { color: var(--growth); }
+    .callout-growth .callout-label { color: #206248; }
     .callout-warning { background: var(--warning-bg); border-color: var(--warning); }
-    .callout-warning .callout-label { color: var(--warning); }
+    .callout-warning .callout-label { color: #866004; }
     .callout-reflect { background: var(--reflect-bg); border-color: var(--reflect); }
-    .callout-reflect .callout-label { color: var(--reflect); }
+    .callout-reflect .callout-label { color: #4855a3; }
     .callout-caution { background: var(--caution-bg); border-color: var(--caution); }
     .callout-caution .callout-label { color: var(--caution); }
 
@@ -127,7 +224,7 @@
     }
     .strat-table th {
       font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-      text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.08em; color: #206248;
       text-align: left; padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--accent);
       background: var(--accent-light);
     }
@@ -226,8 +323,8 @@
     .fcfr { background: var(--bg-card); }
     .fcfr .t {
       font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
-      text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent);
-      margin-bottom: 0.5rem; opacity: 0.7;
+      text-transform: uppercase; letter-spacing: 0.1em; color: #24624a;
+      margin-bottom: 0.5rem;
     }
     .fcfr .q {
       font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 500;
@@ -240,7 +337,7 @@
     }
     .fcbk .t {
       font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
-      text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6;
+      text-transform: uppercase; letter-spacing: 0.1em; opacity: 1;
     }
     .fcbk .a { font-size: 0.88rem; line-height: 1.6; }
 
@@ -281,8 +378,8 @@
       font-size: 0.7rem; padding: 0.15rem 0.55rem; border-radius: 10px;
       font-family: 'JetBrains Mono', monospace;
     }
-    .sa-tag.hit { background: #e8f5ee; color: #2e7d5e; }
-    .sa-tag.miss { background: #f0f0f0; color: #999; }
+    .sa-tag.hit { background: #e8f5ee; color: #206248; }
+    .sa-tag.miss { background: #f0f0f0; color: #505050; }
     .sa-model {
       margin-top: 0.5rem; font-size: 0.85rem; background: #fafaf7;
       border: 1px solid var(--border-light); border-radius: 4px; padding: 0.75rem; display: none;
@@ -302,7 +399,7 @@
     }
     .scenario-card .scenario-label {
       font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
-      text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-warm);
+      text-transform: uppercase; letter-spacing: 0.12em; color: #a25619;
       margin-bottom: 0.4rem;
     }
     .scenario-card .scenario-situation {
@@ -377,18 +474,62 @@
   top: 0;
 }
 
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Disclaimer banner ─── */
+.disclaimer-banner { background: #fffdf7; border-bottom: 1px solid var(--border); }
+.disclaimer-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 0.45rem 2rem; width: 100%; border: none; background: transparent;
+  cursor: pointer; font-size: 0.72rem; color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: background 0.15s;
+}
+.disclaimer-toggle:hover { background: rgba(0,0,0,0.03); }
+.disc-arrow { transition: transform 0.3s; font-size: 0.65rem; }
+.disc-arrow.open { transform: rotate(180deg); }
+.disclaimer-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; padding: 0 2rem; }
+.disclaimer-body.open { max-height: 400px; padding: 0 2rem 1.1rem; }
+.disclaimer-body-inner { max-width: 860px; margin: 0 auto; font-size: 0.8rem; line-height: 1.7; color: var(--text-muted); }
+.disclaimer-body-inner p { margin-bottom: 0.45rem; }
+.disclaimer-body-inner p:last-child { margin-bottom: 0; }
+
 </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner" role="region" aria-label="Important disclaimer">
+  <button type="button" class="disclaimer-toggle" onclick="toggleDisclaimer()" aria-expanded="false" aria-controls="disc-body">
+    <span aria-hidden="true">⚠</span>
+    <span>Important Disclaimer</span>
+    <span class="disc-arrow" id="disc-arrow" aria-hidden="true">▼</span>
+  </button>
+  <div class="disclaimer-body" id="disc-body">
+    <div class="disclaimer-body-inner">
+      <p>These resources are provided free of charge for educational purposes only. They are supplemental guides and should not substitute professional counseling, medical advice, or your institution's official support services.</p>
+      <p>While every effort has been made to ensure accuracy, content may contain errors or reflect evolving research. Always verify strategies against current professional guidance and your own circumstances.</p>
+      <p>These materials are not affiliated with any university, testing organization, or publisher. No guarantees are made regarding outcomes. Use at your own discretion.</p>
+    </div>
+  </div>
+</div>
+
 
 <!-- HERO -->
-<div class="hero">
+<header class="hero" role="banner">
   <div class="badge">Your Guide to Thriving</div>
   <h1>Thrive</h1>
   <p class="subtitle">A practical, no-judgment guide to building confidence, study skills, social courage, and real-world readiness for the transition from high school to college and beyond.</p>
-</div>
+</header>
 
 <div class="container" id="main-content" role="main">
 
@@ -403,23 +544,23 @@
 <div class="toc">
   <h2>What's Inside</h2>
   <div class="toc-grid">
-    <a href="#s1"><span class="num">01</span> You Are Not Behind</a>
-    <a href="#s2"><span class="num">02</span> How to Actually Study</a>
-    <a href="#s3"><span class="num">03</span> Managing Anxiety & Asking for Help</a>
-    <a href="#s4"><span class="num">04</span> Reading, Writing, & the Skills Nobody Taught You</a>
-    <a href="#s5"><span class="num">05</span> Navigating Social Media & Digital Noise</a>
-    <a href="#s6"><span class="num">06</span> Talking to People in Real Life</a>
-    <a href="#s7"><span class="num">07</span> Being the Person Others Feel Safe Around</a>
-    <a href="#s8"><span class="num">08</span> Time Management & Adulting Basics</a>
-    <a href="#s9"><span class="num">09</span> Building Your Confidence Playbook</a>
-    <a href="#s10"><span class="num">10</span> When You Are the Problem (And That's Okay)</a>
-    <a href="#interactive"><span class="num">++</span> Self-Assessments & Practice</a>
+    <a href="#s1"><span class="num" aria-hidden="true">01</span> You Are Not Behind</a>
+    <a href="#s2"><span class="num" aria-hidden="true">02</span> How to Actually Study</a>
+    <a href="#s3"><span class="num" aria-hidden="true">03</span> Managing Anxiety & Asking for Help</a>
+    <a href="#s4"><span class="num" aria-hidden="true">04</span> Reading, Writing, & the Skills Nobody Taught You</a>
+    <a href="#s5"><span class="num" aria-hidden="true">05</span> Navigating Social Media & Digital Noise</a>
+    <a href="#s6"><span class="num" aria-hidden="true">06</span> Talking to People in Real Life</a>
+    <a href="#s7"><span class="num" aria-hidden="true">07</span> Being the Person Others Feel Safe Around</a>
+    <a href="#s8"><span class="num" aria-hidden="true">08</span> Time Management & Adulting Basics</a>
+    <a href="#s9"><span class="num" aria-hidden="true">09</span> Building Your Confidence Playbook</a>
+    <a href="#s10"><span class="num" aria-hidden="true">10</span> When You Are the Problem (And That's Okay)</a>
+    <a href="#interactive"><span class="num" aria-hidden="true">++</span> Self-Assessments & Practice</a>
   </div>
 </div>
 
 <!-- SECTION 1 -->
 <div class="section-card" id="s1">
-  <h2><span class="snum">Section 01</span> You Are Not Behind</h2>
+  <h2><span class="snum" aria-hidden="true">Section 01</span> You Are Not Behind</h2>
   <p>There is a lie floating around in your head, and it sounds something like this: "Everyone else knows what they are doing except me." That is categorically, demonstrably false. The students sitting next to you in orientation are terrified too. The ones who look confident are often the most anxious underneath. College is a transition, not a test you were supposed to have already passed.</p>
 
   <p>If you went through high school during COVID, you lost something real. Not just instruction time, but the social scaffolding that teaches you how to navigate shared spaces, read body language, resolve small conflicts, and build the kind of casual friendships that make hard things bearable. You did not fail. The system around you failed, and now you are left to rebuild skills that should have developed naturally over years of face-to-face interaction. That is not a character flaw. That is a circumstance, and circumstances can be worked with.</p>
@@ -442,7 +583,7 @@
 
 <!-- SECTION 2 -->
 <div class="section-card" id="s2">
-  <h2><span class="snum">Section 02</span> How to Actually Study</h2>
+  <h2><span class="snum" aria-hidden="true">Section 02</span> How to Actually Study</h2>
   <p>Here is the uncomfortable truth: most students do not know how to study. They were never explicitly taught, and the methods they default to, rereading notes, highlighting textbooks, cramming the night before, are among the least effective strategies that cognitive science has identified. This is not about working harder. This is about working in a way that aligns with how your brain actually processes and retains information.</p>
 
   <h3>The Science of Forgetting (And Why It Helps You)</h3>
@@ -481,7 +622,7 @@
 
 <!-- SECTION 3 -->
 <div class="section-card" id="s3">
-  <h2><span class="snum">Section 03</span> Managing Anxiety & Asking for Help</h2>
+  <h2><span class="snum" aria-hidden="true">Section 03</span> Managing Anxiety & Asking for Help</h2>
   <p>Anxiety is not weakness. Anxiety is your brain's threat detection system firing in situations where there is no actual threat. When you feel your heart racing before raising your hand in class, that is the same neurological response your ancestors had when facing a predator. Your brain has not caught up to the fact that asking a question in Biology 101 is not life-threatening. Understanding this does not make the feeling go away, but it does let you respond to it differently. You can acknowledge the alarm without obeying it.</p>
 
   <h3>The Anxiety Cycle and How to Break It</h3>
@@ -518,7 +659,7 @@
 
 <!-- SECTION 4 -->
 <div class="section-card" id="s4">
-  <h2><span class="snum">Section 04</span> Reading, Writing, & the Skills Nobody Taught You</h2>
+  <h2><span class="snum" aria-hidden="true">Section 04</span> Reading, Writing, & the Skills Nobody Taught You</h2>
   <p>If you feel like there are basic skills everyone else seems to have that you somehow missed, you are right. But here is the part nobody tells you: it happened to millions of students, not just you. Curriculum changes, pandemic disruptions, and shifting educational priorities created genuine gaps. The good news is that these are mechanical skills, meaning they respond extremely well to deliberate practice. You can close these gaps faster than you think.</p>
 
   <h3>Reading Comprehension</h3>
@@ -543,7 +684,7 @@
 
 <!-- SECTION 5 -->
 <div class="section-card" id="s5">
-  <h2><span class="snum">Section 05</span> Navigating Social Media & Digital Noise</h2>
+  <h2><span class="snum" aria-hidden="true">Section 05</span> Navigating Social Media & Digital Noise</h2>
   <p>Your phone is not neutral. It is a device engineered by teams of behavioral psychologists and designers whose explicit goal is to maximize the time you spend looking at it. Every notification, every infinite scroll, every autoplay video is a deliberate design choice meant to exploit the dopamine system in your brain. This is not a conspiracy theory. It is a well-documented business model. Understanding this is the first step toward taking back control of your attention, your self-image, and your mental health.</p>
 
   <h3>The Comparison Machine</h3>
@@ -573,7 +714,7 @@
 
 <!-- SECTION 6 -->
 <div class="section-card" id="s6">
-  <h2><span class="snum">Section 06</span> Talking to People in Real Life</h2>
+  <h2><span class="snum" aria-hidden="true">Section 06</span> Talking to People in Real Life</h2>
   <p>If making small talk feels unnatural, if you dread group projects, if you avoid the dining hall because you do not want to sit alone, you are experiencing something that millions of young adults share. Social skills are skills, meaning they develop through practice, not through wishing you were different. The awkwardness you feel is not a permanent feature of who you are. It is a muscle that has not been exercised enough, often because the pandemic removed the gym.</p>
 
   <h3>Starting Conversations When You Have No Idea What to Say</h3>
@@ -599,7 +740,7 @@
 
 <!-- SECTION 7 -->
 <div class="section-card" id="s7">
-  <h2><span class="snum">Section 07</span> Being the Person Others Feel Safe Around</h2>
+  <h2><span class="snum" aria-hidden="true">Section 07</span> Being the Person Others Feel Safe Around</h2>
   <p>This section is about something that is easy to overlook: the impact you have on the people around you. Every interaction you have either adds to or subtracts from someone else's sense of safety, belonging, and confidence. You do not have to be a therapist or a saint. You just have to be aware that your words, your tone, your body language, and even your silence carry weight, especially for people who are already anxious or struggling.</p>
 
   <h3>What "Safe" Looks Like in Practice</h3>
@@ -629,7 +770,7 @@
 
 <!-- SECTION 8 -->
 <div class="section-card" id="s8">
-  <h2><span class="snum">Section 08</span> Time Management & Adulting Basics</h2>
+  <h2><span class="snum" aria-hidden="true">Section 08</span> Time Management & Adulting Basics</h2>
   <p>The transition from high school to college involves a sudden and dramatic increase in personal responsibility. Nobody is going to wake you up, remind you about assignments, make sure you eat, or tell you to go to bed at a reasonable hour. This freedom is exhilarating and terrifying in equal measure. The students who thrive are not the ones with the most willpower. They are the ones who build systems that do not require willpower.</p>
 
   <h3>The Weekly Planning Session</h3>
@@ -659,7 +800,7 @@
 
 <!-- SECTION 9 -->
 <div class="section-card" id="s9">
-  <h2><span class="snum">Section 09</span> Building Your Confidence Playbook</h2>
+  <h2><span class="snum" aria-hidden="true">Section 09</span> Building Your Confidence Playbook</h2>
   <p>Confidence is not a feeling you wait for. It is a result of repeated action. You do not become confident and then take action. You take action and then become confident. This is not motivational poster nonsense. This is how the brain works. Each time you do something that scares you and survive it, your brain stores that experience as evidence that you are capable. Over time, the evidence accumulates, and what used to feel impossible starts to feel manageable.</p>
 
   <h3>The Confidence Equation</h3>
@@ -681,7 +822,7 @@
 
 <!-- SECTION 10 -->
 <div class="section-card" id="s10">
-  <h2><span class="snum">Section 10</span> When You Are the Problem (And That's Okay)</h2>
+  <h2><span class="snum" aria-hidden="true">Section 10</span> When You Are the Problem (And That's Okay)</h2>
   <p>This section requires honesty, and it might be the most important one in this guide. Some of you are not just struggling with anxiety or confidence. Some of you are contributing to other people's anxiety and undermining other people's confidence, and you may not even realize it. This is not an accusation. It is an invitation to look inward with the same openness you would want others to extend to you.</p>
 
   <h3>Unintentional Harm Is Still Harm</h3>
@@ -745,27 +886,27 @@
 <h2 class="interactive-header" id="interactive">Self-Assessments & Practice</h2>
 <p class="interactive-sub">Test your understanding, flip through key concepts, and practice putting ideas into your own words.</p>
 
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('quiz')">Scenario Quiz</button>
-  <button class="tab-btn" onclick="showTab('flash')">Flashcards</button>
-  <button class="tab-btn" onclick="showTab('sa')">Reflective Writing</button>
+<div class="tab-bar" role="tablist" aria-label="Practice sections">
+  <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-quiz" id="tab-quiz" onclick="showTab('quiz')">Scenario Quiz</button>
+  <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-flash" id="tab-flash" onclick="showTab('flash')">Flashcards</button>
+  <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-sa" id="tab-sa" onclick="showTab('sa')">Reflective Writing</button>
 </div>
 
 <!-- QUIZ PANEL -->
-<div class="tab-panel active" id="panel-quiz">
+<div class="tab-panel active" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
   <div id="quiz-container"></div>
-  <button class="quiz-check-btn" onclick="gradeQuiz()">Check My Answers</button>
+  <button type="button" class="quiz-check-btn" onclick="gradeQuiz()">Check My Answers</button>
   <div class="quiz-score" id="quiz-score" style="display:none;"></div>
 </div>
 
 <!-- FLASHCARD PANEL -->
-<div class="tab-panel" id="panel-flash">
+<div class="tab-panel" id="panel-flash" role="tabpanel" aria-labelledby="tab-flash">
   <div class="fc-filters" id="fc-filters"></div>
   <div class="fc-grid" id="fc-grid"></div>
 </div>
 
 <!-- SELF-ASSESSMENT PANEL -->
-<div class="tab-panel" id="panel-sa">
+<div class="tab-panel" id="panel-sa" role="tabpanel" aria-labelledby="tab-sa">
   <div id="sa-container"></div>
 </div>
 
@@ -973,9 +1114,13 @@ const saData = [
 
 // ========== TAB SYSTEM ==========
 function showTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
+  const activeBtn = document.getElementById('tab-' + tab);
+  if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected', 'true'); }
   document.getElementById('panel-' + tab).classList.add('active');
 }
 
@@ -1022,12 +1167,19 @@ function gradeQuiz() {
 function buildFlashcards() {
   const cats = [...new Set(flashcards.map(f => f.cat))];
   const filtersDiv = document.getElementById('fc-filters');
-  let fhtml = '<button class="fc-filter-btn active" onclick="filterFC(\'all\',this)">All</button>';
+  let fhtml = '<button type="button" class="fc-filter-btn active" onclick="filterFC(\'all\',this)">All</button>';
   cats.forEach(c => {
-    fhtml += `<button class="fc-filter-btn" onclick="filterFC('${c}',this)">${c}</button>`;
+    fhtml += `<button type="button" class="fc-filter-btn" onclick="filterFC('${c}',this)">${c}</button>`;
   });
   filtersDiv.innerHTML = fhtml;
   renderFC('all');
+}
+
+function flipFC(el) {
+  el.classList.toggle('fl');
+  el.setAttribute('aria-label', el.classList.contains('fl')
+    ? 'Answer showing — press Space or Enter to flip back'
+    : 'Flashcard — press Space or Enter to flip');
 }
 
 function renderFC(cat) {
@@ -1035,7 +1187,7 @@ function renderFC(cat) {
   const filtered = cat === 'all' ? flashcards : flashcards.filter(f => f.cat === cat);
   let html = '';
   filtered.forEach((f, i) => {
-    html += `<div class="fc" onclick="this.classList.toggle('fl')"><div class="fci"><div class="fcfr"><div class="t">${f.cat}</div><div class="q">${f.q}</div><div class="h">Click to flip</div></div><div class="fcbk"><div class="t">Answer</div><div class="a">${f.a}</div></div></div></div>`;
+    html += `<div class="fc" role="button" tabindex="0" aria-label="Flashcard — press Space or Enter to flip" onclick="flipFC(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipFC(this);}"><div class="fci"><div class="fcfr"><div class="t" aria-hidden="true">${f.cat}</div><div class="q">${f.q}</div><div class="h" aria-hidden="true">Click to flip</div></div><div class="fcbk"><div class="t" aria-hidden="true">Answer</div><div class="a">${f.a}</div></div></div></div>`;
   });
   grid.innerHTML = html;
 }
@@ -1053,7 +1205,7 @@ function buildSA() {
   saData.forEach((q, i) => {
     html += `<div class="sa-q"><div class="qn">Reflection ${i+1}</div><div class="qt">${q.q}</div>`;
     html += `<textarea class="sa-ta" id="sa-ta-${i}" placeholder="Write your response here..."></textarea>`;
-    html += `<button class="sa-btn" onclick="gradeSA(${i})">Check My Response</button>`;
+    html += `<button type="button" class="sa-btn" onclick="gradeSA(${i})">Check My Response</button>`;
     html += `<div class="sa-result" id="sa-res-${i}"><div class="sa-pct" id="sa-pct-${i}"></div><div class="sa-bar-wrap"><div class="sa-bar" id="sa-bar-${i}"></div></div><div class="sa-tags" id="sa-tags-${i}"></div><span class="sa-model-toggle" onclick="toggleModel(${i})">Show model answer</span><div class="sa-model" id="sa-mod-${i}">${q.model}</div></div></div>`;
   });
   c.innerHTML = html;
@@ -1100,23 +1252,47 @@ function toggleModel(idx) {
 // ========== PROGRESS TRACKER ==========
 function toggleProgress(el) {
   el.classList.toggle('done');
-  const check = el.querySelector('.progress-check');
-  check.innerHTML = el.classList.contains('done') ? '&#10003;' : '';
-  // Save to localStorage
+  const done = el.classList.contains('done');
+  el.querySelector('.progress-check').innerHTML = done ? '&#10003;' : '';
+  el.setAttribute('aria-checked', done ? 'true' : 'false');
   const key = el.dataset.key;
   const state = JSON.parse(localStorage.getItem('thrive-progress') || '{}');
-  state[key] = el.classList.contains('done');
+  state[key] = done;
   localStorage.setItem('thrive-progress', JSON.stringify(state));
 }
 
 function loadProgress() {
+  // Add accessible roles to progress items
+  document.querySelectorAll('.progress-item').forEach(el => {
+    el.setAttribute('role', 'checkbox');
+    el.setAttribute('aria-checked', 'false');
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleProgress(this); }
+    });
+  });
   const state = JSON.parse(localStorage.getItem('thrive-progress') || '{}');
   Object.keys(state).forEach(key => {
     if (state[key]) {
       const el = document.querySelector(`[data-key="${key}"]`);
-      if (el) { el.classList.add('done'); el.querySelector('.progress-check').innerHTML = '&#10003;'; }
+      if (el) {
+        el.classList.add('done');
+        el.querySelector('.progress-check').innerHTML = '&#10003;';
+        el.setAttribute('aria-checked', 'true');
+      }
     }
   });
+}
+
+
+// ========== DISCLAIMER ==========
+function toggleDisclaimer() {
+  const body = document.getElementById('disc-body');
+  const arrow = document.getElementById('disc-arrow');
+  const btn = document.querySelector('.disclaimer-toggle');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+  btn.setAttribute('aria-expanded', body.classList.contains('open') ? 'true' : 'false');
 }
 
 // ========== INIT ==========
@@ -1128,13 +1304,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-  <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
-  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
-  <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
-  <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
-  <p style="margin: 0 0 10px 0;">No guarantees are made regarding the completeness, accuracy, or reliability of any information presented on these sites. Use at your own discretion. If you spot an error, we appreciate you letting us know so it can be corrected.</p>
-  <p style="margin: 0 0 10px 0;">These materials are not affiliated with, endorsed by, or officially connected to any university, college, testing organization, or textbook publisher. All content represents the independent work and ideas of the author.</p>
-  <p style="margin: 0;">This resource is provided "as is" without warranty of any kind, express or implied. The author assumes no liability for any errors or for any actions taken based on the information provided here.</p>
 </div>
 </body>
 </html>
